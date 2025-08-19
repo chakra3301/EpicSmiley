@@ -466,11 +466,11 @@ body {
     position: fixed;
     z-index: 10000;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 80px;
+    transform: translateX(-50%);
     width: 90%;
     max-width: 800px;
-    height: 80vh;
+    max-height: calc(100vh - 160px);
     background-color: transparent;
     border-radius: 12px;
     overflow: hidden;

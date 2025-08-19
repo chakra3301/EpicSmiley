@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Smile - Mac Desktop</title>
+    <link rel="icon" type="image/png" href="assets/718smiley.png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+
+    <script>
+        // Ensure OBJLoader is available globally
+        if (typeof THREE !== 'undefined' && THREE.OBJLoader === 'undefined') {
+            console.log('OBJLoader not found, loading from alternative source...');
+        }
+    </script>
+</head>
+<body>
+    <!-- Top Bar (Menu Bar) -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="apple-logo">
+                <img src="assets/718smiley.png" alt="Epic Smile" class="logo-image">
+            </div>
+        </div>
+        <div class="top-bar-right">
+            <div class="status-item">📶</div>
+            <div class="status-item">🔋</div>
+            <div class="status-item time">12:00 PM</div>
+        </div>
+    </div>
+
+    <!-- Desktop Area -->
+    <div class="desktop">
+        <!-- Desktop Folders -->
+        <div class="folder smile-folder" data-folder="smile">
+            <img src="assets/smile folder.png" alt="Smile Folder" class="folder-icon">
+            <span class="folder-label">Smile</span>
+        </div>
+        
+        <!-- 3D Spinning Asset -->
+        <div class="spinning-3d" id="3d-container">
+            <!-- 3D model will be rendered here -->
+        </div>
+        
+        <!-- Dock -->
+        <div class="dock">
+            <div class="dock-item" data-app="firefox">
+                <img src="assets/layer 4.png" alt="FireFox" class="dock-icon">
+                <span class="dock-label">FireFox</span>
+            </div>
+                    <div class="dock-item" data-app="3d" class="coming-soon">
+            <img src="assets/3d.png" alt="Epic Circles" class="dock-icon">
+            <span class="dock-label">Epic Circles</span>
+        </div>
+
+
+            <div class="dock-item" data-app="musicly">
+                <img src="assets/musicly.png" alt="Musicly" class="dock-icon">
+                <span class="dock-label">Musicly</span>
+            </div>
+            <div class="dock-item" data-app="twitter">
+                <img src="assets/twitter.png" alt="Twitter" class="dock-icon">
+                <span class="dock-label">Twitter</span>
+            </div>
+            <div class="dock-item" data-app="jupiter">
+                <img src="assets/jupiter.png" alt="Jupiter" class="dock-icon">
+                <span class="dock-label">Jupiter</span>
+            </div>
+            <div class="dock-item" data-app="soundcloud">
+                <img src="assets/layer 5.png" alt="SoundCloud" class="dock-icon">
+                <span class="dock-label">SoundCloud</span>
+            </div>
+            <div class="dock-item" data-app="trash">
+                <img src="assets/trash.png" alt="Trash" class="dock-icon">
+                <span class="dock-label">Trash</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+
+    
+    <!-- Jupiter Plugin Trading Modal -->
+    <div id="jupiter-modal" class="jupiter-modal">
+        <div class="jupiter-modal-content">
+            <div class="jupiter-modal-header" id="jupiter-drag-handle">
+                <div class="jupiter-window-controls">
+                    <div class="jupiter-control jupiter-close" id="jupiter-close"></div>
+                    <div class="jupiter-control jupiter-minimize"></div>
+                    <div class="jupiter-control jupiter-maximize"></div>
+                </div>
+                <div class="jupiter-title-bar">
+                    <img src="assets/jupiter.png" alt="Jupiter" class="jupiter-title-icon">
+                    <span class="jupiter-title">Jupiter Trading</span>
+                </div>
+            </div>
+            <div class="jupiter-container">
+                <div id="jupiter-plugin"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SoundCloud Modal -->
+    <div id="soundcloud-modal" class="soundcloud-modal">
+        <div class="soundcloud-modal-content">
+            <div class="soundcloud-modal-header" id="soundcloud-drag-handle">
+                <div class="soundcloud-window-controls">
+                    <div class="soundcloud-control soundcloud-close" id="soundcloud-close"></div>
+                    <div class="soundcloud-control soundcloud-minimize"></div>
+                    <div class="soundcloud-control soundcloud-maximize"></div>
+                </div>
+                <div class="soundcloud-title-bar">
+                    <img src="assets/layer 5.png" alt="SoundCloud" class="soundcloud-title-icon">
+                    <span class="soundcloud-title">SoundCloud</span>
+                </div>
+            </div>
+            <div class="soundcloud-container">
+                <div class="soundcloud-player-wrapper">
+                    <iframe 
+                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2067541404&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+                        width="100%" 
+                        height="100%"
+                        scrolling="no"
+                        frameborder="no"
+                        allow="autoplay"
+                        class="soundcloud-player">
+                    </iframe>
+                    <div class="soundcloud-overlay">
+                        <div class="soundcloud-content">
+                            <img src="assets/layer 5.png" alt="SoundCloud" class="soundcloud-fallback-icon">
+                            <h3>Epic Playlist</h3>
+                            <p>by Pharaotay</p>
+                            <div class="soundcloud-controls">
+                                <button class="soundcloud-play-btn" onclick="toggleSoundcloudPlayer()">
+                                    🎵 Start Playing
+                                </button>
+                                <a href="https://on.soundcloud.com/kNEpflmUSDUE3TNFaV" target="_blank" class="soundcloud-link">
+                                    📱 Open in App
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Epic Smiles Gallery Modal -->
+    <div id="epic-smiles-modal" class="epic-smiles-modal">
+        <div class="epic-smiles-modal-content">
+            <div class="epic-smiles-modal-header" id="epic-smiles-drag-handle">
+                <div class="epic-smiles-window-controls">
+                    <div class="epic-smiles-control epic-smiles-close" id="epic-smiles-close"></div>
+                    <div class="epic-smiles-control epic-smiles-minimize"></div>
+                    <div class="epic-smiles-control epic-smiles-maximize"></div>
+                </div>
+                <div class="epic-smiles-title-bar">
+                    <img src="assets/smile folder.png" alt="Epic Smiles" class="epic-smiles-title-icon">
+                    <span class="epic-smiles-title">Epic Smiles Gallery</span>
+                </div>
+            </div>
+            <div class="epic-smiles-container">
+                <div class="epic-smiles-grid">
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/1abb5ad1408d6837ef168821128d9a5f.jpg')">
+                        <img src="epic smiles/1abb5ad1408d6837ef168821128d9a5f.jpg" alt="Epic Smile 1">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/5e4517cb4d897ad526bc7248f54e6adf.jpg')">
+                        <img src="epic smiles/5e4517cb4d897ad526bc7248f54e6adf.jpg" alt="Epic Smile 2">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/096ef7b98d8e8a274e5243b429229f12.jpg')">
+                        <img src="epic smiles/096ef7b98d8e8a274e5243b429229f12.jpg" alt="Epic Smile 3">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/3692f8edb4105e92554124b50351f234.jpg')">
+                        <img src="epic smiles/3692f8edb4105e92554124b50351f234.jpg" alt="Epic Smile 4">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/94aae88a5a6fb846a09f0948813a08c8.jpg')">
+                        <img src="epic smiles/94aae88a5a6fb846a09f0948813a08c8.jpg" alt="Epic Smile 5">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/e347a4d3940755a7a473a55406ecc9cf.jpg')">
+                        <img src="epic smiles/e347a4d3940755a7a473a55406ecc9cf.jpg" alt="Epic Smile 6">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/dfd12619f8f30b18728fdfd712a311b2.jpg')">
+                        <img src="epic smiles/dfd12619f8f30b18728fdfd712a311b2.jpg" alt="Epic Smile 7">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/e99b9ee62f9be5840eba02e73b7d69de.jpg')">
+                        <img src="epic smiles/e99b9ee62f9be5840eba02e73b7d69de.jpg" alt="Epic Smile 8">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/46a7bd9bfb6c9c8256b93f1139deca1b.jpg')">
+                        <img src="epic smiles/46a7bd9bfb6c9c8256b93f1139deca1b.jpg" alt="Epic Smile 9">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/3fe36762752a084dde27eb8bad435b75.jpg')">
+                        <img src="epic smiles/3fe36762752a084dde27eb8bad435b75.jpg" alt="Epic Smile 10">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/5027c9ededa27e3fcaff961eaecbdd97.jpg')">
+                        <img src="epic smiles/5027c9ededa27e3fcaff961eaecbdd97.jpg" alt="Epic Smile 11">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/9060a6a2e3a5f926974685aa4d0b0b4b.jpg')">
+                        <img src="epic smiles/9060a6a2e3a5f926974685aa4d0b0b4b.jpg" alt="Epic Smile 12">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/8ce8f995522943de0607ed6b1b95e59b.jpg')">
+                        <img src="epic smiles/8ce8f995522943de0607ed6b1b95e59b.jpg" alt="Epic Smile 13">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/832bae055e1b3521b96d5f967266033b.jpg')">
+                        <img src="epic smiles/832bae055e1b3521b96d5f967266033b.jpg" alt="Epic Smile 14">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/5f6a5bcd71d8445e21986bc2f4c35ffb.jpg')">
+                        <img src="epic smiles/5f6a5bcd71d8445e21986bc2f4c35ffb.jpg" alt="Epic Smile 15">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/1308923801001.jpg')">
+                        <img src="epic smiles/1308923801001.jpg" alt="Epic Smile 16">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/Joker_Awesome.png')">
+                        <img src="epic smiles/Joker_Awesome.png" alt="Epic Smile 17">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/Stay_Puft_Awesome_Smiley_by_kreme_cc.png')">
+                        <img src="epic smiles/Stay_Puft_Awesome_Smiley_by_kreme_cc.png" alt="Epic Smile 18">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/hitler_wee.jpg')">
+                        <img src="epic smiles/hitler_wee.jpg" alt="Epic Smile 19">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/73a37a87e70c85f2ad58bf9d57e511ec.jpg')">
+                        <img src="epic smiles/73a37a87e70c85f2ad58bf9d57e511ec.jpg" alt="Epic Smile 20">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/9f7a0d3b3bf0acb1863f56ce94feb082.jpg')">
+                        <img src="epic smiles/9f7a0d3b3bf0acb1863f56ce94feb082.jpg" alt="Epic Smile 21">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/9d6944cd8d1181ceee79b2667071d685.jpg')">
+                        <img src="epic smiles/9d6944cd8d1181ceee79b2667071d685.jpg" alt="Epic Smile 22">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/e60bb042334fac6dfd6465a93571ed90.jpg')">
+                        <img src="epic smiles/e60bb042334fac6dfd6465a93571ed90.jpg" alt="Epic Smile 23">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/73619ab65146db57f85dcb855c9f64da.jpg')">
+                        <img src="epic smiles/73619ab65146db57f85dcb855c9f64da.jpg" alt="Epic Smile 24">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/864fc23aa9bf4a38e05be994710a9708.jpg')">
+                        <img src="epic smiles/864fc23aa9bf4a38e05be994710a9708.jpg" alt="Epic Smiles 25">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/c2724fbc403bb30bc3062b938f31989f.jpg')">
+                        <img src="epic smiles/c2724fbc403bb30bc3062b938f31989f.jpg" alt="Epic Smiles 26">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/42c69d69149c4651dd2add4061cfdbae.jpg')">
+                        <img src="epic smiles/42c69d69149c4651dd2add4061cfdbae.jpg" alt="Epic Smiles 27">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/30a36d862c1e1f92fffa3b1933653be0.jpg')">
+                        <img src="epic smiles/30a36d862c1e1f92fffa3b1933653be0.jpg" alt="Epic Smiles 28">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/9f3bc26b95456997014e085da3d0bb11.jpg')">
+                        <img src="epic smiles/9f3bc26b95456997014e085da3d0bb11.jpg" alt="Epic Smiles 29">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/1d040605b72758fbf762ca3514596175.jpg')">
+                        <img src="epic smiles/1d040605b72758fbf762ca3514596175.jpg" alt="Epic Smiles 30">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/415fe24b24f14de3f900b6deb28dd253.jpg')">
+                        <img src="epic smiles/415fe24b24f14de3f900b6deb28dd253.jpg" alt="Epic Smiles 31">
+                    </div>
+                    <div class="epic-smiles-image" onclick="openImageModal('epic smiles/415fe24b24f14de3f900b6deb28dd253.jpg')">
+                        <img src="epic smiles/415fe24b24f14de3f900b6deb28dd253.jpg" alt="Epic Smiles 32">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pony Gallery Modal -->
+    <div id="pony-gallery-modal" class="epic-smiles-modal">
+        <div class="epic-smiles-modal-content">
+            <div class="epic-smiles-modal-header" id="pony-gallery-drag-handle">
+                <div class="epic-smiles-window-controls">
+                    <div class="epic-smiles-control epic-smiles-close" onclick="closePonyGallery()"></div>
+                    <div class="epic-smiles-control epic-smiles-minimize" onclick="minimizePonyGallery()"></div>
+                    <div class="epic-smiles-control epic-smiles-maximize" onclick="maximizePonyGallery()"></div>
+                </div>
+                <div class="epic-smiles-title-bar">
+                    <img src="assets/pony folder.png" alt="DO NOT OPEN!" class="epic-smiles-title-icon">
+                    <span class="epic-smiles-title">DO NOT OPEN! Gallery</span>
+                </div>
+            </div>
+            <div class="epic-smiles-container">
+                <div class="epic-smiles-grid">
+                <div class="epic-smiles-image" onclick="openImageModal('pony/6832ce2308dbb6e058a778a5e6428624.avif')">
+                    <img src="pony/6832ce2308dbb6e058a778a5e6428624.avif" alt="Pony 1">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/76582675aaa95d6a8a0550a958d7d6af.avif')">
+                    <img src="pony/76582675aaa95d6a8a0550a958d7d6af.avif" alt="Pony 2">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/37ab6db7221b10957b1128b991133972.avif')">
+                    <img src="pony/37ab6db7221b10957b1128b991133972.avif" alt="Pony 3">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/f0dd72179f9141155035ed06d02c4479.avif')">
+                    <img src="pony/f0dd72179f9141155035ed06d02c4479.avif" alt="Pony 4">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/c648a09c4a160b6aca3b9f258ba9d05a.avif')">
+                    <img src="pony/c648a09c4a160b6aca3b9f258ba9d05a.avif" alt="Pony 5">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/433c64a4a9fcbe30df1adde24f2edb8a.avif')">
+                    <img src="pony/433c64a4a9fcbe30df1adde24f2edb8a.avif" alt="Pony 6">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/44c9473dc815a7850170c0d849267dc9.avif')">
+                    <img src="pony/44c9473dc815a7850170c0d849267dc9.avif" alt="Pony 7">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/8a75d40424f65bb2f53fad572148b5b2.avif')">
+                    <img src="pony/8a75d40424f65bb2f53fad572148b5b2.avif" alt="Pony 8">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/9d6dd4aa7aae77affd3afc667ee7a6c0.avif')">
+                    <img src="pony/9d6dd4aa7aae77affd3afc667ee7a6c0.avif" alt="Pony 9">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/b21d9f5098863b360962e3073477351b.avif')">
+                    <img src="pony/b21d9f5098863b360962e3073477351b.avif" alt="Pony 10">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/b7d1a73e5c9334e2591a369178ca80b8.avif')">
+                    <img src="pony/b7d1a73e5c9334e2591a369178ca80b8.avif" alt="Pony 11">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/4aff89c94313b79a19b073d42babe68d.avif')">
+                    <img src="pony/4aff89c94313b79a19b073d42babe68d.avif" alt="Pony 12">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/5499cbd5394b30c679f389a4fea28655.avif')">
+                    <img src="pony/5499cbd5394b30c679f389a4fea28655.avif" alt="Pony 13">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/7cd0351f67eb50a223f61f6c7dc6f724.avif')">
+                    <img src="pony/7cd0351f67eb50a223f61f6c7dc6f724.avif" alt="Pony 14">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/a9d31d0df6dc76a739a4b168f8e6ae88.avif')">
+                    <img src="pony/a9d31d0df6dc76a739a4b168f8e6ae88.avif" alt="Pony 15">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/e34a8eab5734e65ae86dda9064a73377.avif')">
+                    <img src="pony/e34a8eab5734e65ae86dda9064a73377.avif" alt="Pony 16">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/1e80134acb6b0fc69fab073aebfd5b06.avif')">
+                    <img src="pony/1e80134acb6b0fc69fab073aebfd5b06.avif" alt="Pony 17">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/302c9fcc1239b4874b37e44411b41611.avif')">
+                    <img src="pony/302c9fcc1239b4874b37e44411b41611.avif" alt="Pony 18">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/e82539f60752c2021d2092f45f5fd438.avif')">
+                    <img src="pony/e82539f60752c2021d2092f45f5fd438.avif" alt="Pony 19">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/9be97a328ae8df3bff52c962f9249987.avif')">
+                    <img src="pony/9be97a328ae8df3bff52c962f9249987.avif" alt="Pony 20">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/IMG_5085.jpg')">
+                    <img src="pony/IMG_5085.jpg" alt="Pony 21">
+                </div>
+                <div class="epic-smiles-image" onclick="openImageModal('pony/53778031_494904361040104_921174127400714240_n.png')">
+                    <img src="pony/53778031_494904361040104_921174127400714240_n.png" alt="Pony 22">
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Image Viewer Modal -->
+    <div id="image-viewer-modal" class="image-viewer-modal">
+        <div class="image-viewer-content">
+            <div class="image-viewer-header">
+                <span class="image-viewer-close" id="image-viewer-close">&times;</span>
+            </div>
+            <div class="image-viewer-container">
+                <img id="full-size-image" src="" alt="Full Size Image">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Trash Modal -->
+    <div id="trash-modal" class="trash-modal">
+        <div class="trash-modal-content">
+            <div class="trash-modal-header" id="trash-drag-handle">
+                <div class="trash-window-controls">
+                    <div class="trash-control trash-close" id="trash-close"></div>
+                    <div class="trash-control trash-minimize"></div>
+                    <div class="trash-control trash-maximize"></div>
+                </div>
+                <div class="trash-title-bar">
+                    <img src="assets/trash.png" alt="Trash" class="trash-title-icon">
+                    <span class="trash-title">Trash</span>
+                </div>
+            </div>
+            <div class="trash-container">
+                <div class="trash-items">
+                    <div class="trash-folder" onclick="openPonyFolder()">
+                        <img src="assets/pony folder.png" alt="DO NOT OPEN! Folder" class="trash-folder-icon">
+                        <span class="trash-folder-label">DO NOT OPEN!</span>
+                    </div>
+                </div>
+                <div class="trash-info">
+                    <p>Items in Trash: 1</p>
+                    <p>Size: 0 KB</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Jupiter Plugin Script -->
+    <script src="https://plugin.jup.ag/plugin-v1.js"></script>
+</body>
+</html>

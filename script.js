@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     epicSmilesModal.style.display = 'block';
                 }
             } else if (appName === 'firefox') {
-                // Open Know Your Meme - Awesome Face / Epic Smiley
-                window.open('https://knowyourmeme.com/memes/awesome-face-epic-smiley', '_blank');
+                // Open Find the Epic Faces Wiki
+                window.open('https://find-the-epic-faces-official.fandom.com/wiki/Find_the_Epic_Faces_Wiki', '_blank');
             }
             // TODO: Add other app-specific functionality here
         });

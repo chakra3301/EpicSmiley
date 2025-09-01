@@ -62,11 +62,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (epicSmilesModal) {
                     epicSmilesModal.style.display = 'block';
                 }
-            } else if (appName === 'firefox') {
-                // Open Find the Epic Faces Wiki
-                window.open('https://find-the-epic-faces-official.fandom.com/wiki/Find_the_Epic_Faces_Wiki', '_blank');
-            }
-            // TODO: Add other app-specific functionality here
+            } else if (appName === 'pfp-generator') {
+                // Open PFP Generator modal
+                const pfpGeneratorModal = document.getElementById('pfp-generator-modal');
+                if (pfpGeneratorModal) {
+                    pfpGeneratorModal.style.display = 'block';
+                    // Initialize PFP Generator
+                    initPFPGenerator();
+                }
+                         } else if (appName === 'firefox') {
+                 // Open Find the Epic Faces Wiki
+                 window.open('https://find-the-epic-faces-official.fandom.com/wiki/Find_the_Epic_Faces_Wiki', '_blank');
+             } else if (appName === 'merch') {
+                 // Open Epic Store in new tab
+                 window.open('https://store.fun/epic', '_blank');
+             }
+             // TODO: Add other app-specific functionality here
         });
     });
     
@@ -323,6 +334,73 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error('Pony gallery modal element not found during setup');
     }
+    
+    // PFP Generator modal control handlers
+    console.log('Setting up PFP Generator modal control handlers...');
+    
+    const pfpModal = document.getElementById('pfp-generator-modal');
+    if (pfpModal) {
+        console.log('PFP Generator modal found:', pfpModal);
+        
+        // Close button (red circle)
+        const closeBtn = pfpModal.querySelector('.pfp-generator-close');
+        console.log('Close button found:', closeBtn);
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                pfpModal.style.display = 'none';
+                console.log('PFP Generator modal closed');
+            });
+            console.log('PFP Generator close button handler added');
+        } else {
+            console.error('PFP Generator close button not found');
+        }
+        
+        // Minimize button (yellow circle)
+        const minimizeBtn = pfpModal.querySelector('.pfp-generator-minimize');
+        console.log('Minimize button found:', minimizeBtn);
+        if (minimizeBtn) {
+            minimizeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                pfpModal.style.display = 'none';
+                console.log('PFP Generator modal minimized');
+                // You could add minimize functionality here if needed
+            });
+            console.log('PFP Generator minimize button handler added');
+        } else {
+            console.error('PFP Generator minimize button not found');
+        }
+        
+        // Maximize button (green circle)
+        const maximizeBtn = pfpModal.querySelector('.pfp-generator-maximize');
+        console.log('Maximize button handler added');
+        if (maximizeBtn) {
+            maximizeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                // Toggle between normal and maximized state
+                pfpModal.classList.toggle('pfp-generator-maximized');
+                console.log('PFP Generator modal maximize toggled');
+            });
+            console.log('PFP Generator maximize button handler added');
+        } else {
+            console.error('PFP Generator maximize button not found');
+        }
+        
+        // Close when clicking outside the modal
+        pfpModal.addEventListener('click', function(e) {
+            if (e.target === pfpModal) {
+                pfpModal.style.display = 'none';
+                console.log('PFP Generator modal closed via outside click');
+            }
+        });
+        console.log('PFP Generator outside click handler added');
+        
+    } else {
+        console.error('PFP Generator modal element not found during setup');
+    }
 });
 
 // Toggle SoundCloud Player Overlay
@@ -405,10 +483,10 @@ function makeEpicSmilesDraggable() {
     dragHandle.addEventListener('selectstart', function(e) {
         if (isDragging) {
             e.preventDefault();
-        }
-    });
-}
-
+            }
+        });
+    }
+    
 // Jupiter Plugin Initialization
 function initJupiterPlugin() {
     // Check if Jupiter Plugin is already initialized
@@ -1126,3 +1204,860 @@ function makePonyGalleryDraggable() {
         isDragging = false;
     }
 }
+
+// PFP Generator functionality
+let pfpAssets = {
+    backgrounds: [],
+    sceneFrame: [],
+    base: [],
+    special: [],
+    accessories: [],
+    hat: [],
+    stickerTopRight: [],
+    stickerRight: [],
+    stickerTopLeft: [],
+    stickerLeft: [],
+    overlays: []
+};
+
+let currentAssetIndices = {
+    backgrounds: 0,
+    sceneFrame: 1, // Always start with scene frame selected
+    base: 0,
+    special: 0,
+    accessories: 0,
+    hat: 0,
+    stickerTopRight: 0,
+    stickerRight: 0,
+    stickerTopLeft: 0,
+    stickerLeft: 0,
+    overlays: 0
+};
+
+function initPFPGenerator() {
+    loadPFPAssets();
+    setupPFPCanvas();
+    updateAllPreviews();
+    
+    // Wait a bit for the canvas to be properly initialized
+    setTimeout(() => {
+        renderPFP();
+    }, 100);
+}
+
+function loadPFPAssets() {
+    // Load ALL assets from the epic pfp gen folder
+    pfpAssets.backgrounds = [
+        'epic pfp gen/Backgrounds/1980361_a96ff.png',
+        'epic pfp gen/Backgrounds/2009.png',
+        'epic pfp gen/Backgrounds/2024-11-06-01.52.png',
+        'epic pfp gen/Backgrounds/360-goth.png',
+        'epic pfp gen/Backgrounds/360-graveyard.png',
+        'epic pfp gen/Backgrounds/360-redbull-zombgirl-3000.png',
+        'epic pfp gen/Backgrounds/911.png',
+        'epic pfp gen/Backgrounds/ai-girl.png',
+        'epic pfp gen/Backgrounds/america.png',
+        'epic pfp gen/Backgrounds/aquarium-vibes.png',
+        'epic pfp gen/Backgrounds/asian-core.png',
+        'epic pfp gen/Backgrounds/Backpagelol1.png',
+        'epic pfp gen/Backgrounds/backrooms-epic-troll-heaven-67.png',
+        'epic pfp gen/Backgrounds/backrooms-plain.png',
+        'epic pfp gen/Backgrounds/big-brain.png',
+        'epic pfp gen/Backgrounds/bleach.png',
+        'epic pfp gen/Backgrounds/blue-core.png',
+        'epic pfp gen/Backgrounds/blue-eyes.png',
+        'epic pfp gen/Backgrounds/brain-worms.png',
+        'epic pfp gen/Backgrounds/brats.png',
+        'epic pfp gen/Backgrounds/candy-space.png',
+        'epic pfp gen/Backgrounds/candy-world.png',
+        'epic pfp gen/Backgrounds/cartooon-network.png',
+        'epic pfp gen/Backgrounds/castle.png',
+        'epic pfp gen/Backgrounds/checkered-ass.png',
+        'epic pfp gen/Backgrounds/cheetah-zombie.png',
+        'epic pfp gen/Backgrounds/cheetah.png',
+        'epic pfp gen/Backgrounds/chief-keef.png',
+        'epic pfp gen/Backgrounds/china-ad.png',
+        'epic pfp gen/Backgrounds/china.png',
+        'epic pfp gen/Backgrounds/chinese-core-puca.png',
+        'epic pfp gen/Backgrounds/ching-chang-ching-chang-chong.png',
+        'epic pfp gen/Backgrounds/cod-calling-cards.png',
+        'epic pfp gen/Backgrounds/creeper.png',
+        'epic pfp gen/Backgrounds/dark-magician.png',
+        'epic pfp gen/Backgrounds/dc.png',
+        'epic pfp gen/Backgrounds/death-core.png',
+        'epic pfp gen/Backgrounds/epic-attack.png',
+        'epic pfp gen/Backgrounds/epic-space.png',
+        'epic pfp gen/Backgrounds/epicc.png',
+        'epic pfp gen/Backgrounds/evangilion.png',
+        'epic pfp gen/Backgrounds/funkeys.png',
+        'epic pfp gen/Backgrounds/gameboy-gastly.png',
+        'epic pfp gen/Backgrounds/gameboy-pokemon-japanese.png',
+        'epic pfp gen/Backgrounds/girl-swag.png',
+        'epic pfp gen/Backgrounds/glorp-scene.png',
+        'epic pfp gen/Backgrounds/glorp.png',
+        'epic pfp gen/Backgrounds/god-wont-let-me.png',
+        'epic pfp gen/Backgrounds/goth-kitty-punk-rock.png',
+        'epic pfp gen/Backgrounds/goth-scene-girls.png',
+        'epic pfp gen/Backgrounds/gyaru-mag.png',
+        'epic pfp gen/Backgrounds/halo.png',
+        'epic pfp gen/Backgrounds/hatsune-miku.png',
+        'epic pfp gen/Backgrounds/heavy-metal.png',
+        'epic pfp gen/Backgrounds/host-hunter.png',
+        'epic pfp gen/Backgrounds/hot-topic-2.png',
+        'epic pfp gen/Backgrounds/hot-topic.png',
+        'epic pfp gen/Backgrounds/i-dog.png',
+        'epic pfp gen/Backgrounds/i-love-cp-nigga.png',
+        'epic pfp gen/Backgrounds/i-love-music-meoooow.png',
+        'epic pfp gen/Backgrounds/idek-atp.png',
+        'epic pfp gen/Backgrounds/IMG_6740-3.png',
+        'epic pfp gen/Backgrounds/IMG_6768-3.png',
+        'epic pfp gen/Backgrounds/internet-kids.png',
+        'epic pfp gen/Backgrounds/invader.png',
+        'epic pfp gen/Backgrounds/ipod-bg.png',
+        'epic pfp gen/Backgrounds/ipod-screen.png',
+        'epic pfp gen/Backgrounds/jap-little-ponies.png',
+        'epic pfp gen/Backgrounds/jap-mag-1.png',
+        'epic pfp gen/Backgrounds/japan.png',
+        'epic pfp gen/Backgrounds/kaewaii-core.png',
+        'epic pfp gen/Backgrounds/kid-cudi.png',
+        'epic pfp gen/Backgrounds/masacer.png',
+        'epic pfp gen/Backgrounds/melody-core.png',
+        'epic pfp gen/Backgrounds/meoooooooow.png',
+        'epic pfp gen/Backgrounds/mlg-roblox-illuminati.png',
+        'epic pfp gen/Backgrounds/mlp-scene.png',
+        'epic pfp gen/Backgrounds/MLP.png',
+        'epic pfp gen/Backgrounds/neon-tokyo.png',
+        'epic pfp gen/Backgrounds/niki-and-drake.png',
+        'epic pfp gen/Backgrounds/obey.png',
+        'epic pfp gen/Backgrounds/ora.png',
+        'epic pfp gen/Backgrounds/pain-glitched.png',
+        'epic pfp gen/Backgrounds/pc-build.png',
+        'epic pfp gen/Backgrounds/pikachu.png',
+        'epic pfp gen/Backgrounds/pink-core.png',
+        'epic pfp gen/Backgrounds/pink-domo.png',
+        'epic pfp gen/Backgrounds/pokemon-gameboy.png',
+        'epic pfp gen/Backgrounds/poly.png',
+        'epic pfp gen/Backgrounds/pyramids.png',
+        'epic pfp gen/Backgrounds/rainbow-checker.png',
+        'epic pfp gen/Backgrounds/rainbow-invader.png',
+        'epic pfp gen/Backgrounds/rainbow-world.png',
+        'epic pfp gen/Backgrounds/rainbow.png',
+        'epic pfp gen/Backgrounds/roblox.png',
+        'epic pfp gen/Backgrounds/scene-green.png',
+        'epic pfp gen/Backgrounds/sheeple.png',
+        'epic pfp gen/Backgrounds/shinny.png',
+        'epic pfp gen/Backgrounds/shonen-jump.png',
+        'epic pfp gen/Backgrounds/skate-2.png',
+        'epic pfp gen/Backgrounds/skitzo-trading.png',
+        'epic pfp gen/Backgrounds/skrillex.png',
+        'epic pfp gen/Backgrounds/snoop-dogg.png',
+        'epic pfp gen/Backgrounds/sonic-x-shadow.png',
+        'epic pfp gen/Backgrounds/sticker-pack-2.png',
+        'epic pfp gen/Backgrounds/sticker-pack-3.png',
+        'epic pfp gen/Backgrounds/sticker-pack.png',
+        'epic pfp gen/Backgrounds/sushi.png',
+        'epic pfp gen/Backgrounds/the-boy.png',
+        'epic pfp gen/Backgrounds/tigre-neon.png',
+        'epic pfp gen/Backgrounds/VaporwaveIcon.png',
+        'epic pfp gen/Backgrounds/vogue.png',
+        'epic pfp gen/Backgrounds/webamp.png',
+        'epic pfp gen/Backgrounds/wizard-101.png',
+        'epic pfp gen/Backgrounds/xbox-ad.png',
+        'epic pfp gen/Backgrounds/xbox-anime-girl.png',
+        'epic pfp gen/Backgrounds/xbox-bubble-gum.png',
+        'epic pfp gen/Backgrounds/xbox-icons.png',
+        'epic pfp gen/Backgrounds/xbox-skull.png',
+        'epic pfp gen/Backgrounds/y2k-monster-3.png',
+        'epic pfp gen/Backgrounds/yugioh-1.png'
+    ];
+    
+    pfpAssets.sceneFrame = [
+        'epic pfp gen/scene-frame.png'
+    ];
+    
+    pfpAssets.base = [
+        'epic pfp gen/base/OG.png',
+        'epic pfp gen/base/korea.png',
+        'epic pfp gen/base/red.png',
+        'epic pfp gen/base/green.png',
+        'epic pfp gen/base/light-blue.png',
+        'epic pfp gen/base/blue.png',
+        'epic pfp gen/base/dark-blue.png',
+        'epic pfp gen/base/purple.png',
+        'epic pfp gen/base/pink.png',
+        'epic pfp gen/base/Cod-gold.png',
+        'epic pfp gen/base/galaxy.png',
+        'epic pfp gen/base/star.png',
+        'epic pfp gen/base/pink-cheetah.png',
+        'epic pfp gen/base/usa.png',
+        'epic pfp gen/base/derp.png',
+        'epic pfp gen/base/dark.png',
+        'epic pfp gen/base/stoned.png',
+        'epic pfp gen/base/nut.png',
+        'epic pfp gen/base/rainbow-001.png',
+        'epic pfp gen/base/clown.png',
+        'epic pfp gen/base/white-clown.png',
+        'epic pfp gen/base/horn.png',
+        'epic pfp gen/base/monster.png',
+        'epic pfp gen/base/love.png',
+        'epic pfp gen/base/rainbow.png',
+        'epic pfp gen/base/cute-derp.png'
+    ];
+    
+    pfpAssets.special = [
+        'epic pfp gen/Special face/balloon.png',
+        'epic pfp gen/Special face/beat.png',
+        'epic pfp gen/Special face/cool-face.png',
+        'epic pfp gen/Special face/crystal.png',
+        'epic pfp gen/Special face/Cybernetic_Epic_Face.png',
+        'epic pfp gen/Special face/dark-sonic.png',
+        'epic pfp gen/Special face/death.png',
+        'epic pfp gen/Special face/demon.png',
+        'epic pfp gen/Special face/DJ.png',
+        'epic pfp gen/Special face/dracula.png',
+        'epic pfp gen/Special face/Dream_Epic_Face.png',
+        'epic pfp gen/Special face/emo-girl.png',
+        'epic pfp gen/Special face/Evil_Epic_Face.png',
+        'epic pfp gen/Special face/Frozen_Epic_Face.png',
+        'epic pfp gen/Special face/Girl.png',
+        'epic pfp gen/Special face/goth-neon.png',
+        'epic pfp gen/Special face/grey-cat.png',
+        'epic pfp gen/Special face/joker.png',
+        'epic pfp gen/Special face/kitsune.png',
+        'epic pfp gen/Special face/Knight_Epic_Face.png',
+        'epic pfp gen/Special face/mdm8.png',
+        'epic pfp gen/Special face/morphed-glorp.png',
+        'epic pfp gen/Special face/Mlp-rainbow.png',
+        'epic pfp gen/Special face/Mlp-shadow.png',
+        'epic pfp gen/Special face/Nightmare_Epic_Face.png',
+        'epic pfp gen/Special face/Nightmare_Epic_Face-copy.png',
+        'epic pfp gen/Special face/Ripped_Apart_Epic_Face.png',
+        'epic pfp gen/Special face/ryuk.png',
+        'epic pfp gen/Special face/spirit.png',
+        'epic pfp gen/Special face/Splink_Epic_Face.png',
+        'epic pfp gen/Special face/Starstruck_Epic_Face.png',
+        'epic pfp gen/Special face/Unicorn.png',
+        'epic pfp gen/Special face/Yeti_Epic_Face.png',
+        'epic pfp gen/Special face/zombie-cat.png',
+        'epic pfp gen/Special face/Zombie_Epic_Face.png'
+    ];
+    
+    pfpAssets.accessories = [
+        'epic pfp gen/Accessories/3D-Glasses.png',
+        'epic pfp gen/Accessories/cig.png',
+        'epic pfp gen/Accessories/Ghost_Epic_Face.png',
+        'epic pfp gen/Accessories/Love-eye-patch.png',
+        'epic pfp gen/Accessories/Mustach.png',
+        'epic pfp gen/Accessories/Newspaper_Epic_Face.png',
+        'epic pfp gen/Accessories/Pit-vipers.png',
+        'epic pfp gen/Accessories/sharingan.png',
+        'epic pfp gen/Accessories/usa-party-glasses.png'
+    ];
+    
+    pfpAssets.hat = [
+        'epic pfp gen/hat/Acheron_Epic_Face.png',
+        'epic pfp gen/hat/Aku_Epic_Face.png',
+        'epic pfp gen/hat/Angel_Epic_Face.png',
+        'epic pfp gen/hat/Angel-2.png',
+        'epic pfp gen/hat/angel3.png',
+        'epic pfp gen/hat/Arrow_Head_Epic_Face.png',
+        'epic pfp gen/hat/black-bandana.png',
+        'epic pfp gen/hat/blood-bandana.png',
+        'epic pfp gen/hat/crown.png',
+        'epic pfp gen/hat/dc-cap.png',
+        'epic pfp gen/hat/domo-hat.png',
+        'epic pfp gen/hat/domo-obey.png',
+        'epic pfp gen/hat/emo-hair-green.png',
+        'epic pfp gen/hat/emo-hair-pink.png',
+        'epic pfp gen/hat/galaxy-obey.png',
+        'epic pfp gen/hat/i-3-Haters.png',
+        'epic pfp gen/hat/Jester-outfit.png',
+        'epic pfp gen/hat/Melting_Epic_Face.png',
+        'epic pfp gen/hat/mtn-dew.png',
+        'epic pfp gen/hat/Obey.png',
+        'epic pfp gen/hat/partyy.png',
+        'epic pfp gen/hat/Skull_Epic_Face.png',
+        'epic pfp gen/hat/Tgod.png'
+    ];
+    
+    pfpAssets.stickerTopRight = [
+        'epic pfp gen/stick top right/Butter.png',
+        'epic pfp gen/stick top right/chaotic.png',
+        'epic pfp gen/stick top right/Dragoon.png',
+        'epic pfp gen/stick top right/Fairy-Odd-Parents.png',
+        'epic pfp gen/stick top right/KIK.png',
+        'epic pfp gen/stick top right/monster.png',
+        'epic pfp gen/stick top right/Neff.png',
+        'epic pfp gen/stick top right/pierced-veil.png',
+        'epic pfp gen/stick top right/Please_No_Epic_Faces.png',
+        'epic pfp gen/stick top right/Pony-explorer.png',
+        'epic pfp gen/stick top right/prestige-1.png',
+        'epic pfp gen/stick top right/prestige-2.png',
+        'epic pfp gen/stick top right/prestige-3.png',
+        'epic pfp gen/stick top right/prestige-4.png',
+        'epic pfp gen/stick top right/prestige-5.png',
+        'epic pfp gen/stick top right/prestige-6.png',
+        'epic pfp gen/stick top right/prestige-7.png',
+        'epic pfp gen/stick top right/prestige-8.png',
+        'epic pfp gen/stick top right/prestige-9.png',
+        'epic pfp gen/stick top right/prestige-10.png',
+        'epic pfp gen/stick top right/prestige-11.png',
+        'epic pfp gen/stick top right/prestige-12.png',
+        'epic pfp gen/stick top right/prestige-13.png',
+        'epic pfp gen/stick top right/prestige-14.png',
+        'epic pfp gen/stick top right/pretige-master.png',
+        'epic pfp gen/stick top right/SFPR-LMFAO.png',
+        'epic pfp gen/stick top right/sonic.png',
+        'epic pfp gen/stick top right/XD.png',
+        'epic pfp gen/stick top right/you-suck.png'
+    ];
+    
+    pfpAssets.stickerRight = [
+        'epic pfp gen/sticker right/8bit-cat.png',
+        'epic pfp gen/sticker right/anarchy.png',
+        'epic pfp gen/sticker right/artix-dog.png',
+        'epic pfp gen/sticker right/bioncle.png',
+        'epic pfp gen/sticker right/butterfly-knife.png',
+        'epic pfp gen/sticker right/cheetah-swag.png',
+        'epic pfp gen/sticker right/cool-s.png',
+        'epic pfp gen/sticker right/curesed-gameboy.png',
+        'epic pfp gen/sticker right/DC-studs.png',
+        'epic pfp gen/sticker right/digi-cam.png',
+        'epic pfp gen/sticker right/emo-ticon.png',
+        'epic pfp gen/sticker right/Epic_Banana.png',
+        'epic pfp gen/sticker right/Epic_Computer.png',
+        'epic pfp gen/sticker right/gears-of-war.png',
+        'epic pfp gen/sticker right/glorp-dog.png',
+        'epic pfp gen/sticker right/goth-baddy-1.png',
+        'epic pfp gen/sticker right/hatsune-rockstar.png',
+        'epic pfp gen/sticker right/htf.png',
+        'epic pfp gen/sticker right/ipod.png',
+        'epic pfp gen/sticker right/ipods.png',
+        'epic pfp gen/sticker right/jet-set-radio.png',
+        'epic pfp gen/sticker right/jiggle-dash.png',
+        'epic pfp gen/sticker right/Kirby-Headphones.png',
+        'epic pfp gen/sticker right/kuromi-001.png',
+        'epic pfp gen/sticker right/KUROMI.png',
+        'epic pfp gen/sticker right/Lean-Cup-2.png',
+        'epic pfp gen/sticker right/lmfao-glitter.png',
+        'epic pfp gen/sticker right/Maple-story-mushroom.png',
+        'epic pfp gen/sticker right/MELODY.png',
+        'epic pfp gen/sticker right/minecraft-pov.png',
+        'epic pfp gen/sticker right/mountain-dew.png',
+        'epic pfp gen/sticker right/MW2.png',
+        'epic pfp gen/sticker right/NY-zebra.png',
+        'epic pfp gen/sticker right/quagen-pint.png',
+        'epic pfp gen/sticker right/rawr-XD.png',
+        'epic pfp gen/sticker right/scary-goth-mommy.png',
+        'epic pfp gen/sticker right/skibidi-sonic.png',
+        'epic pfp gen/sticker right/skrttles-glitter.png',
+        'epic pfp gen/sticker right/speaker-head.png',
+        'epic pfp gen/sticker right/star-man.png',
+        'epic pfp gen/sticker right/tnt.png',
+        'epic pfp gen/sticker right/tomogachi.png',
+        'epic pfp gen/sticker right/Water-girl.png'
+    ];
+    
+    pfpAssets.stickerTopLeft = [
+        'epic pfp gen/sticker top left/100%-cute.png',
+        'epic pfp gen/sticker top left/bakugan.png',
+        'epic pfp gen/sticker top left/Epic_Vitamin.png',
+        'epic pfp gen/sticker top left/EPIC-FACE.png',
+        'epic pfp gen/sticker top left/GORILLAZ.png',
+        'epic pfp gen/sticker top left/GTA-SA.png',
+        'epic pfp gen/sticker top left/horizon.png',
+        'epic pfp gen/sticker top left/hypixel.png',
+        'epic pfp gen/sticker top left/i-3-brains.png',
+        'epic pfp gen/sticker top left/KORN.png',
+        'epic pfp gen/sticker top left/Layer-91.png',
+        'epic pfp gen/sticker top left/Mc.png',
+        'epic pfp gen/sticker top left/midnight-club.png',
+        'epic pfp gen/sticker top left/MLP.png',
+        'epic pfp gen/sticker top left/pink-swag.png',
+        'epic pfp gen/sticker top left/Saw_Epic_Face.png',
+        'epic pfp gen/sticker top left/simple-plan.png',
+        'epic pfp gen/sticker top left/SLIPKNOT.png',
+        'epic pfp gen/sticker top left/Sonic-404.png',
+        'epic pfp gen/sticker top left/swag.png',
+        'epic pfp gen/sticker top left/Winamp.png',
+        'epic pfp gen/sticker top left/Wizard-101.png',
+        'epic pfp gen/sticker top left/yugioh.png',
+        'epic pfp gen/sticker top left/zombie-kitty.png',
+        'epic pfp gen/sticker top left/zombie-nyan-cat.png'
+    ];
+    
+    pfpAssets.stickerLeft = [
+        'epic pfp gen/sticker left/Ancient_Statue_Epic_Face.png',
+        'epic pfp gen/sticker left/annoying-orange.png',
+        'epic pfp gen/sticker left/Anvil_Epic_Face.png',
+        'epic pfp gen/sticker left/awp.png',
+        'epic pfp gen/sticker left/Axe_Epic_Face.png',
+        'epic pfp gen/sticker left/bit-me-bracelete.png',
+        'epic pfp gen/sticker left/black-queen.png',
+        'epic pfp gen/sticker left/bulbasor.png',
+        'epic pfp gen/sticker left/Cactus_Epic_Face.png',
+        'epic pfp gen/sticker left/diamond-sword.png',
+        'epic pfp gen/sticker left/EMO-BOB.png',
+        'epic pfp gen/sticker left/emo-zombie-cat.png',
+        'epic pfp gen/sticker left/Epic_Cereal.png',
+        'epic pfp gen/sticker left/fairy.png',
+        'epic pfp gen/sticker left/Fire-boy.png',
+        'epic pfp gen/sticker left/Flappy-bird.png',
+        'epic pfp gen/sticker left/gold-axe.png',
+        'epic pfp gen/sticker left/goth-little-pony.png',
+        'epic pfp gen/sticker left/green-day.png',
+        'epic pfp gen/sticker left/hello-kitty.png',
+        'epic pfp gen/sticker left/hot-ponies.png',
+        'epic pfp gen/sticker left/Internet_Epic_Face.png',
+        'epic pfp gen/sticker left/krooked.png',
+        'epic pfp gen/sticker left/Mango-monster.png',
+        'epic pfp gen/sticker left/minecraft-scene.png',
+        'epic pfp gen/sticker left/Og-monster.png',
+        'epic pfp gen/sticker left/pack-a-punch.png',
+        'epic pfp gen/sticker left/Pink-Zomboid.png',
+        'epic pfp gen/sticker left/Popsicle_Epic_Face.png',
+        'epic pfp gen/sticker left/rainbow-boots.png',
+        'epic pfp gen/sticker left/rainbow-dike.png',
+        'epic pfp gen/sticker left/Rotmg-white-bag.png',
+        'epic pfp gen/sticker left/selfie.png',
+        'epic pfp gen/sticker left/SKELE-PONY.png',
+        'epic pfp gen/sticker left/ultra-rosa.png',
+        'epic pfp gen/sticker left/ultra.png',
+        'epic pfp gen/sticker left/Veigar.png',
+        'epic pfp gen/sticker left/white-puffle.png',
+        'epic pfp gen/sticker left/zomboid.png'
+    ];
+    
+    pfpAssets.overlays = [
+        'epic pfp gen/overlays/AND-#YOLO.png',
+        'epic pfp gen/overlays/AND-BE--A-BELIEBER.png',
+        'epic pfp gen/overlays/AND-BE-EPIC.png',
+        'epic pfp gen/overlays/HAIIIIII.png',
+        'epic pfp gen/overlays/im-so-hardcore.png',
+        'epic pfp gen/overlays/Internet-party.png',
+        'epic pfp gen/overlays/Layer-79.png',
+        'epic pfp gen/overlays/overlay.png',
+        'epic pfp gen/overlays/pokemon-vmax.png',
+        'epic pfp gen/overlays/scene-stickers.png',
+        'epic pfp gen/overlays/TIME-TO-MAKE-CHANGES.png',
+        'epic pfp gen/overlays/Trasher-overlay.png',
+        'epic pfp gen/overlays/YOU-NEVER-KNOW--WHAT-YOU\'RE-GONNA-GET.png'
+    ];
+}
+
+function setupPFPCanvas() {
+    const canvas = document.getElementById('pfp-canvas');
+    if (!canvas) return;
+    
+    // Ensure canvas has proper dimensions
+    canvas.width = 500;
+    canvas.height = 500;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    
+    // Set a default background
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, 500, 500);
+}
+
+function renderPFP() {
+    const canvas = document.getElementById('pfp-canvas');
+    if (!canvas) return;
+    
+    // Ensure canvas has proper dimensions
+    if (canvas.width === 0 || canvas.height === 0) {
+        canvas.width = 500;
+        canvas.height = 500;
+    }
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    ctx.clearRect(0, 0, 500, 500);
+    
+    // Simple approach: draw everything in sequence with setTimeout to ensure proper order
+    let currentStep = 0;
+    
+    function drawNextStep() {
+        switch(currentStep) {
+            case 0: // Background
+                if (pfpAssets.backgrounds.length > 0 && currentAssetIndices.backgrounds > 0) {
+                    const bgImg = new Image();
+                    bgImg.onload = function() {
+                        ctx.drawImage(bgImg, 0, 0, 500, 500);
+                        currentStep = 1;
+                        setTimeout(drawNextStep, 10); // Small delay to ensure drawing is complete
+                    };
+                    bgImg.onerror = function() {
+                        console.warn('Failed to load background image:', bgImg.src);
+                        currentStep = 1;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    bgImg.src = pfpAssets.backgrounds[currentAssetIndices.backgrounds - 1];
+                } else {
+                    currentStep = 1;
+                    setTimeout(drawNextStep, 10);
+                }
+                break;
+                
+            case 1: // Scene Frame (always drawn after background)
+                if (pfpAssets.sceneFrame.length > 0 && currentAssetIndices.sceneFrame > 0) {
+                    const sceneFrameImg = new Image();
+                    sceneFrameImg.onload = function() {
+                        ctx.drawImage(sceneFrameImg, 0, 0, 500, 500);
+                        currentStep = 2;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    sceneFrameImg.onerror = function() {
+                        console.warn('Failed to load scene frame image');
+                        currentStep = 2;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    sceneFrameImg.src = pfpAssets.sceneFrame[currentAssetIndices.sceneFrame - 1];
+                } else {
+                    currentStep = 2;
+                    setTimeout(drawNextStep, 10);
+                }
+                break;
+                
+            case 2: // Base or Special Face
+                if (pfpAssets.special.length > 0 && currentAssetIndices.special > 0) {
+                    const specialImg = new Image();
+                    specialImg.onload = function() {
+                        ctx.drawImage(specialImg, 0, 0, 500, 500);
+                        currentStep = 3;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    specialImg.onerror = function() {
+                        console.warn('Failed to load special face image:', specialImg.src);
+                        currentStep = 3;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    specialImg.src = pfpAssets.special[currentAssetIndices.special - 1];
+                } else if (pfpAssets.base.length > 0 && currentAssetIndices.base > 0) {
+                    const baseImg = new Image();
+                    baseImg.onload = function() {
+                        ctx.drawImage(baseImg, 0, 0, 500, 500);
+                        currentStep = 3;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    baseImg.onerror = function() {
+                        console.warn('Failed to load base image:', baseImg.src);
+                        currentStep = 3;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    baseImg.src = pfpAssets.base[currentAssetIndices.base - 1];
+                } else {
+                    currentStep = 3;
+                    setTimeout(drawNextStep, 10);
+                }
+                break;
+                
+            case 3: // Accessories
+                if (pfpAssets.accessories.length > 0 && currentAssetIndices.accessories > 0) {
+                    const accImg = new Image();
+                    accImg.onload = function() {
+                        ctx.drawImage(accImg, 0, 0, 500, 500);
+                        currentStep = 4;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    accImg.onerror = function() {
+                        console.warn('Failed to load accessories image:', accImg.src);
+                        currentStep = 4;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    accImg.src = pfpAssets.accessories[currentAssetIndices.accessories - 1];
+                } else {
+                    currentStep = 4;
+                    setTimeout(drawNextStep, 10);
+                }
+                break;
+                
+            case 4: // Hat
+                if (pfpAssets.hat.length > 0 && currentAssetIndices.hat > 0) {
+                    const hatImg = new Image();
+                    hatImg.onload = function() {
+                        ctx.drawImage(hatImg, 0, 0, 500, 500);
+                        currentStep = 5;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    hatImg.onerror = function() {
+                        console.warn('Failed to load hat image:', hatImg.src);
+                        currentStep = 5;
+                        setTimeout(drawNextStep, 10);
+                    };
+                    hatImg.src = pfpAssets.hat[currentAssetIndices.hat - 1];
+                } else {
+                    currentStep = 5;
+                    setTimeout(drawNextStep, 10);
+                }
+                break;
+                
+            case 5: // Stickers
+                drawStickers();
+                break;
+                
+            case 6: // Overlays
+                drawOverlays();
+                break;
+        }
+    }
+    
+    // Start the rendering process
+    drawNextStep();
+    
+    function drawStickers() {
+        // Draw stickers in order
+        let stickerCount = 0;
+        const totalStickers = 4;
+        
+        function drawNextSticker() {
+            if (stickerCount >= totalStickers) {
+                // Stickers done, rendering complete
+                return;
+            }
+            
+            let stickerPath = '';
+            
+            switch(stickerCount) {
+                case 0: // Top Right
+                    if (pfpAssets.stickerTopRight.length > 0 && currentAssetIndices.stickerTopRight > 0) {
+                        stickerPath = pfpAssets.stickerTopRight[currentAssetIndices.stickerTopRight - 1];
+                    }
+                    break;
+                case 1: // Right
+                    if (pfpAssets.stickerRight.length > 0 && currentAssetIndices.stickerRight > 0) {
+                        stickerPath = pfpAssets.stickerRight[currentAssetIndices.stickerRight - 1];
+                    }
+                    break;
+                case 2: // Top Left
+                    if (pfpAssets.stickerTopLeft.length > 0 && currentAssetIndices.stickerTopLeft > 0) {
+                        stickerPath = pfpAssets.stickerTopLeft[currentAssetIndices.stickerTopLeft - 1];
+                    }
+                    break;
+                case 3: // Left
+                    if (pfpAssets.stickerLeft.length > 0 && currentAssetIndices.stickerLeft > 0) {
+                        stickerPath = pfpAssets.stickerLeft[currentAssetIndices.stickerLeft - 1];
+                    }
+                    break;
+            }
+            
+            if (stickerPath) {
+                const stickerImg = new Image();
+                stickerImg.onload = function() {
+                    ctx.drawImage(stickerImg, 0, 0, 500, 500);
+                    stickerCount++;
+                    drawNextSticker();
+                };
+                stickerImg.onerror = function() {
+                    console.warn('Failed to load sticker image:', stickerImg.src);
+                    stickerCount++;
+                    drawNextSticker();
+                };
+                stickerImg.src = stickerPath;
+            } else {
+                stickerCount++;
+                drawNextSticker();
+            }
+        }
+        
+        drawNextSticker();
+    }
+    
+    function drawOverlays() {
+        // Draw overlays
+        if (pfpAssets.overlays.length > 0 && currentAssetIndices.overlays > 0) {
+            const overlayImg = new Image();
+            overlayImg.onload = function() {
+                ctx.drawImage(overlayImg, 0, 0, 500, 500);
+            };
+            overlayImg.onerror = function() {
+                console.warn('Failed to load overlay image:', overlayImg.src);
+            };
+            overlayImg.src = pfpAssets.overlays[currentAssetIndices.overlays - 1];
+        }
+    }
+}
+
+
+
+function updateAllPreviews() {
+    updatePreview('backgrounds', 'background-name', 'background-counter');
+    updatePreview('sceneFrame', 'sceneFrame-name', 'sceneFrame-counter');
+    updatePreview('base', 'base-name', 'base-counter');
+    updatePreview('special', 'special-name', 'special-counter');
+    updatePreview('accessories', 'accessories-name', 'accessories-counter');
+    updatePreview('hat', 'hat-name', 'hat-counter');
+    updatePreview('stickerTopRight', 'stickerTopRight-name', 'stickerTopRight-counter');
+    updatePreview('stickerRight', 'stickerRight-name', 'stickerRight-counter');
+    updatePreview('stickerTopLeft', 'stickerTopLeft-name', 'stickerTopLeft-counter');
+    updatePreview('stickerLeft', 'stickerLeft-name', 'stickerLeft-counter');
+    updatePreview('overlays', 'overlays-name', 'overlays-counter');
+}
+
+function updatePreview(assetType, nameId, counterId) {
+    const nameElement = document.getElementById(nameId);
+    const counterElement = document.getElementById(counterId);
+    
+    if (!nameElement || !counterElement) return;
+    
+    const assets = pfpAssets[assetType];
+    const currentIndex = currentAssetIndices[assetType];
+    
+    if (assets.length === 0) {
+        nameElement.textContent = 'No assets';
+        counterElement.textContent = '0 / 0';
+        return;
+    }
+    
+    if (currentIndex === 0) {
+        nameElement.textContent = 'None';
+        counterElement.textContent = `0 / ${assets.length}`;
+        return;
+    }
+    
+    const assetPath = assets[currentIndex - 1];
+    const fileName = assetPath.split('/').pop().replace('.png', '').replace('.jpg', '');
+    
+    nameElement.textContent = fileName;
+    counterElement.textContent = `${currentIndex} / ${assets.length}`;
+}
+
+function nextAsset(assetType) {
+    const assets = pfpAssets[assetType];
+    if (assets.length === 0) return;
+    
+    currentAssetIndices[assetType]++;
+    if (currentAssetIndices[assetType] > assets.length) {
+        currentAssetIndices[assetType] = 0;
+    }
+    
+    const nameId = `${assetType.replace(/([A-Z])/g, '-$1').toLowerCase()}-name`;
+    const counterId = `${assetType.replace(/([A-Z])/g, '-$1').toLowerCase()}-counter`;
+    
+    updatePreview(assetType, nameId, counterId);
+    
+    // Wait a bit for updates to complete
+    setTimeout(() => {
+        renderPFP();
+    }, 50);
+}
+
+function previousAsset(assetType) {
+    const assets = pfpAssets[assetType];
+    if (assets.length === 0) return;
+    
+    currentAssetIndices[assetType]--;
+    if (currentAssetIndices[assetType] < 0) {
+        currentAssetIndices[assetType] = assets.length;
+    }
+    
+    const nameId = `${assetType.replace(/([A-Z])/g, '-$1').toLowerCase()}-name`;
+    const counterId = `${assetType.replace(/([A-Z])/g, '-$1').toLowerCase()}-counter`;
+    
+    updatePreview(assetType, nameId, counterId);
+    
+    // Wait a bit for updates to complete
+    setTimeout(() => {
+        renderPFP();
+    }, 50);
+}
+
+function randomizePFP() {
+    Object.keys(currentAssetIndices).forEach(assetType => {
+        const assets = pfpAssets[assetType];
+        if (assets.length > 0) {
+            // Randomize between 0 (none) and the number of assets
+            currentAssetIndices[assetType] = Math.floor(Math.random() * (assets.length + 1));
+        } else {
+            currentAssetIndices[assetType] = 0;
+        }
+    });
+    
+    updateAllPreviews();
+    
+    // Wait a bit for updates to complete
+    setTimeout(() => {
+        renderPFP();
+    }, 100);
+}
+
+function downloadPFP() {
+    const canvas = document.getElementById('pfp-canvas');
+    if (!canvas) return;
+    
+    const link = document.createElement('a');
+    link.download = 'epic-face-pfp.png';
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+// Make PFP Generator modal draggable
+function makePFPGeneratorDraggable() {
+    const modal = document.getElementById('pfp-generator-modal');
+    const dragHandle = document.getElementById('pfp-generator-drag-handle');
+    
+    if (!modal || !dragHandle) return;
+    
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+    
+    dragHandle.addEventListener('mousedown', dragStart);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', dragEnd);
+    
+    function dragStart(e) {
+        // Don't start dragging if clicking on control buttons
+        if (e.target.closest('.pfp-generator-close') || 
+            e.target.closest('.pfp-generator-minimize') || 
+            e.target.closest('.pfp-generator-maximize')) {
+            return;
+        }
+        
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+        
+        if (e.target === dragHandle || e.target.closest('.pfp-generator-modal-header')) {
+            isDragging = true;
+            modal.classList.add('pfp-generator-dragging');
+        }
+    }
+    
+    function drag(e) {
+        if (isDragging) {
+            e.preventDefault();
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+            
+            xOffset = currentX;
+            yOffset = currentY;
+            
+            setTranslate(currentX, currentY, modal);
+        }
+    }
+    
+    function setTranslate(xPos, yPos, el) {
+        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+    }
+    
+    function dragEnd(e) {
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+        modal.classList.remove('pfp-generator-dragging');
+    }
+}
+
+// Initialize PFP Generator modal dragging when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    makePFPGeneratorDraggable();
+});

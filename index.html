@@ -50,12 +50,14 @@
                 <img src="assets/Layer 4.png" alt="FireFox" class="dock-icon">
                 <span class="dock-label">FireFox</span>
             </div>
-                    <div class="dock-item" data-app="3d" class="coming-soon">
-            <img src="assets/3d.png" alt="Epic Circles" class="dock-icon">
-            <span class="dock-label">Epic Circles</span>
-        </div>
-
-
+            <div class="dock-item" data-app="merch">
+                <img src="assets/merch button.png" alt="Epic Store" class="dock-icon">
+                <span class="dock-label">Epic Store</span>
+            </div>
+            <div class="dock-item" data-app="pfp-generator">
+                <img src="assets/718smiley.png" alt="PFP Generator" class="dock-icon">
+                <span class="dock-label">PFP Gen</span>
+            </div>
             <div class="dock-item" data-app="musicly">
                 <img src="assets/musicly.png" alt="Musicly" class="dock-icon">
                 <span class="dock-label">Musicly</span>
@@ -388,6 +390,146 @@
                 <div class="trash-info">
                     <p>Items in Trash: 1</p>
                     <p>Size: 0 KB</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PFP Generator Modal -->
+    <div id="pfp-generator-modal" class="pfp-generator-modal">
+        <div class="pfp-generator-modal-content">
+            <div class="pfp-generator-modal-header" id="pfp-generator-drag-handle">
+                <div class="pfp-generator-window-controls">
+                    <div class="pfp-generator-control pfp-generator-close" id="pfp-generator-close"></div>
+                    <div class="pfp-generator-control pfp-generator-minimize"></div>
+                    <div class="pfp-generator-control pfp-generator-maximize"></div>
+                </div>
+                <div class="pfp-generator-title-bar">
+                    <img src="assets/718smiley.png" alt="PFP Generator" class="pfp-generator-title-icon">
+                    <span class="pfp-generator-title">Epic Face PFP Generator</span>
+                </div>
+            </div>
+            <div class="pfp-generator-container">
+                <div class="pfp-generator-main">
+                    <div class="pfp-canvas-container">
+                        <canvas id="pfp-canvas" width="500" height="500"></canvas>
+                    </div>
+                    <div class="pfp-controls">
+                        <div class="pfp-control-section">
+                            <h3>Backgrounds</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('backgrounds')">←</button>
+                                <div class="pfp-asset-name" id="background-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('backgrounds')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="background-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Scene Frame</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('sceneFrame')">←</button>
+                                <div class="pfp-asset-name" id="sceneFrame-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('sceneFrame')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="sceneFrame-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Base</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('base')">←</button>
+                                <div class="pfp-asset-name" id="base-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('base')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="base-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Special Face</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('special')">←</button>
+                                <div class="pfp-asset-name" id="special-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('special')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="special-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Accessories</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('accessories')">←</button>
+                                <div class="pfp-asset-name" id="accessories-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('accessories')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="accessories-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Hat</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('hat')">←</button>
+                                <div class="pfp-asset-name" id="hat-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('hat')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="hat-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Sticker Top Right</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('stickerTopRight')">←</button>
+                                <div class="pfp-asset-name" id="stickerTopRight-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('stickerTopRight')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="stickerTopRight-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Sticker Right</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('stickerRight')">←</button>
+                                <div class="pfp-asset-name" id="stickerRight-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('stickerRight')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="stickerRight-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Sticker Top Left</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('stickerTopLeft')">←</button>
+                                <div class="pfp-asset-name" id="stickerTopLeft-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('stickerTopLeft')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="stickerTopLeft-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Sticker Left</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('stickerLeft')">←</button>
+                                <div class="pfp-asset-name" id="stickerLeft-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('stickerLeft')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="stickerLeft-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-control-section">
+                            <h3>Overlays</h3>
+                            <div class="pfp-control-row">
+                                <button class="pfp-nav-btn" onclick="previousAsset('overlays')">←</button>
+                                <div class="pfp-asset-name" id="overlays-name"></div>
+                                <button class="pfp-nav-btn" onclick="nextAsset('overlays')">→</button>
+                            </div>
+                            <div class="pfp-asset-counter" id="overlays-counter"></div>
+                        </div>
+                        
+                        <div class="pfp-actions">
+                            <button class="pfp-download-btn" onclick="downloadPFP()">Download PFP</button>
+                            <button class="pfp-random-btn" onclick="randomizePFP()">Randomize</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

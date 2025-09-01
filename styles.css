@@ -1829,10 +1829,380 @@ body {
 
 /* Trash Modal Maximized State */
 .trash-modal.trash-maximized {
-    width: 90vw !important;
-    height: 80vh !important;
-    max-width: none !important;
-    left: 5vw !important;
-    top: 10vh !important;
-    transform: none !important;
+    width: 100vw;
+    height: 100vh;
+    top: 32px;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+}
+
+.trash-modal.trash-maximized .trash-modal-content {
+    border-radius: 0;
+    height: 100%;
+}
+
+.trash-modal.trash-maximized .trash-container {
+    height: calc(100% - 50px);
+}
+
+/* PFP Generator Modal Mac-Style Styling */
+.pfp-generator-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 50%;
+    top: 120px;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 1400px;
+    max-height: calc(100vh - 100px);
+    background-color: transparent;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    cursor: move;
+}
+
+.pfp-generator-modal-content {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border: 1px solid #444;
+    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.pfp-generator-modal-header {
+    background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+    border-bottom: 1px solid #444;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: move;
+    user-select: none;
+}
+
+.pfp-generator-window-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.pfp-generator-control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.pfp-generator-close {
+    background: #ff5f57;
+    border: 1px solid #e0443e;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+}
+
+.pfp-generator-close:hover {
+    background: #ff6b6b;
+    transform: scale(1.1);
+}
+
+.pfp-generator-minimize {
+    background: #ffbd2e;
+    border: 1px solid #dea123;
+}
+
+.pfp-generator-minimize:hover {
+    background: #ffd93d;
+    transform: scale(1.1);
+}
+
+.pfp-generator-maximize {
+    background: #28ca42;
+    border: 1px solid #1aab29;
+}
+
+.pfp-generator-maximize:hover {
+    background: #4ade80;
+    transform: scale(1.1);
+}
+
+.pfp-generator-title-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+}
+
+.pfp-generator-title-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.pfp-generator-title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.pfp-generator-container {
+    padding: 8px;
+    height: calc(100% - 50px);
+    overflow-y: auto;
+}
+
+.pfp-generator-main {
+    display: flex;
+    gap: 15px;
+    height: 100%;
+}
+
+.pfp-canvas-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+#pfp-canvas {
+    border: 2px solid #444;
+    border-radius: 8px;
+    background: #000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.pfp-frame-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.pfp-frame-overlay img {
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+}
+
+.pfp-controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    overflow-y: auto;
+    padding-right: 4px;
+    max-height: 100%;
+}
+
+.pfp-control-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 3px;
+    min-height: 28px;
+}
+
+.pfp-control-section h3 {
+    color: #fff;
+    font-size: 8px;
+    font-weight: 500;
+    margin-bottom: 2px;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.pfp-control-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+    margin-bottom: 1px;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pfp-asset-name {
+    color: #ccc;
+    font-size: 7px;
+    text-align: center;
+    margin-bottom: 1px;
+    min-height: 8px;
+    word-break: break-word;
+    line-height: 1.0;
+}
+
+.pfp-asset-counter {
+    color: #888;
+    font-size: 6px;
+    text-align: center;
+    font-style: italic;
+}
+
+.pfp-nav-btn {
+    background: linear-gradient(135deg, #4a4a4a 0%, #3a3a3a 100%);
+    border: 1px solid #555;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1px 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 20px;
+}
+
+.pfp-nav-btn:hover {
+    background: linear-gradient(135deg, #5a5a5a 0%, #4a4a4a 100%);
+    border-color: #666;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pfp-nav-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.pfp-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid #333;
+    border-radius: 4px;
+}
+
+.pfp-download-btn, .pfp-random-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    min-width: 80px;
+}
+
+.pfp-download-btn:hover, .pfp-random-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #666;
+}
+
+.pfp-download-btn:active, .pfp-random-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* PFP Generator Modal Maximized State */
+.pfp-generator-modal.pfp-generator-maximized {
+    width: 100vw;
+    height: 100vh;
+    top: 32px;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+}
+
+.pfp-generator-modal.pfp-generator-maximized .pfp-generator-modal-content {
+    border-radius: 0;
+    height: 100%;
+}
+
+.pfp-generator-modal.pfp-generator-maximized .pfp-generator-container {
+    height: calc(100% - 50px);
+}
+
+/* PFP Generator Modal Animation */
+.pfp-generator-modal {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pfp-generator-modal-content {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* PFP Generator Modal Dragging State */
+.pfp-generator-modal.pfp-generator-dragging {
+    transition: none;
+}
+
+.pfp-generator-modal.pfp-generator-dragging .pfp-generator-modal-content {
+    transition: none;
+}
+
+.pfp-generator-modal.pfp-generator-dragging .pfp-generator-modal-header {
+    background: linear-gradient(180deg, #4a4a4a 0%, #3a3a3a 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .pfp-generator-main {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .pfp-canvas-container {
+        align-self: center;
+    }
+    
+    #pfp-canvas {
+        width: 500px;
+        height: 500px;
+    }
+    
+    .pfp-frame-overlay img {
+        width: 500px;
+        height: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pfp-generator-modal {
+        width: 95%;
+        left: 2.5%;
+        transform: none;
+    }
+    
+    #pfp-canvas {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .pfp-frame-overlay img {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .pfp-controls {
+        gap: 15px;
+    }
+    
+    .pfp-control-section {
+        padding: 10px;
+    }
+    
+    .pfp-asset-preview {
+        width: 60px;
+        height: 60px;
+    }
 }

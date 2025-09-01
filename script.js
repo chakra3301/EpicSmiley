@@ -1817,7 +1817,9 @@ function renderPFP() {
         
         function drawNextSticker() {
             if (stickerCount >= totalStickers) {
-                // Stickers done, rendering complete
+                // Stickers done, now draw overlays
+                currentStep = 6;
+                setTimeout(drawNextStep, 10);
                 return;
             }
             

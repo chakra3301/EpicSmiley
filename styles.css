@@ -206,6 +206,13 @@ body {
     filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
 }
 
+/* Make Epic Store app bigger */
+.dock-item[data-app="merch"] .dock-icon {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+}
+
 /* Desktop Folders */
 .folder {
     position: absolute;

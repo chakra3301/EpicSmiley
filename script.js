@@ -76,9 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (appName === 'merch') {
                 // Open Epic Store in new tab
                 window.open('https://store.fun/epic', '_blank');
-            } else if (appName === 'visualizer') {
-                // Open music visualizer
-                window.open('visualizer.html', '_blank');
             }
              // TODO: Add other app-specific functionality here
         });

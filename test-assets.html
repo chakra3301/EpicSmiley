@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFP Assets Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin: 10px 0; }
+        .asset-item { text-align: center; padding: 10px; border: 1px solid #eee; }
+        .asset-item img { max-width: 100px; max-height: 100px; object-fit: contain; }
+        .asset-item .name { font-size: 10px; margin-top: 5px; word-break: break-all; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>PFP Assets Accessibility Test</h1>
+    
+    <div class="test-section">
+        <h2>Backgrounds Test</h2>
+        <div id="backgrounds-test" class="asset-grid"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Scene Frame Test</h2>
+        <div id="scene-frame-test" class="asset-grid"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Base Test</h2>
+        <div id="base-test" class="asset-grid"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Special Face Test</h2>
+        <div id="special-test" class="asset-grid"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Accessories Test</h2>
+        <div id="accessories-test" class="asset-grid"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Hat Test</h2>
+        <div id="hat-test" class="asset-grid"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Stickers Test</h2>
+        <div id="stickers-test" class="asset-grid"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Overlays Test</h2>
+        <div id="overlays-test" class="asset-grid"></div>
+    </div>
+
+    <script>
+        // Test assets from the organized structure
+        const testAssets = {
+            backgrounds: [
+                'assets/pfp-generator/backgrounds/1980361_a96ff.png',
+                'assets/pfp-generator/backgrounds/2009.png',
+                'assets/pfp-generator/backgrounds/360-goth.png'
+            ],
+            sceneFrame: [
+                'assets/pfp-generator/scene-frame.png'
+            ],
+            base: [
+                'assets/pfp-generator/base/OG.png',
+                'assets/pfp-generator/base/korea.png',
+                'assets/pfp-generator/base/red.png'
+            ],
+            special: [
+                'assets/pfp-generator/special-face/balloon.png',
+                'assets/pfp-generator/special-face/beat.png',
+                'assets/pfp-generator/special-face/cool-face.png'
+            ],
+            accessories: [
+                'assets/pfp-generator/accessories/3D-Glasses.png',
+                'assets/pfp-generator/accessories/cig.png',
+                'assets/pfp-generator/accessories/Ghost_Epic_Face.png'
+            ],
+            hat: [
+                'assets/pfp-generator/hat/Acheron_Epic_Face.png',
+                'assets/pfp-generator/hat/Aku_Epic_Face.png',
+                'assets/pfp-generator/hat/Angel_Epic_Face.png'
+            ],
+            stickers: [
+                'assets/pfp-generator/stickers/top-right/Butter.png',
+                'assets/pfp-generator/stickers/right/8bit-cat.png',
+                'assets/pfp-generator/stickers/top-left/100%-cute.png',
+                'assets/pfp-generator/stickers/left/Ancient_Statue_Epic_Face.png'
+            ],
+            overlays: [
+                'assets/pfp-generator/overlays/AND-#YOLO.png',
+                'assets/pfp-generator/overlays/AND-BE--A-BELIEBER.png',
+                'assets/pfp-generator/overlays/AND-BE-EPIC.png'
+            ]
+        };
+
+        function testAsset(containerId, assets) {
+            const container = document.getElementById(containerId);
+            
+            assets.forEach(assetPath => {
+                const assetItem = document.createElement('div');
+                assetItem.className = 'asset-item';
+                
+                const img = document.createElement('img');
+                img.src = assetPath;
+                img.alt = assetPath.split('/').pop();
+                
+                const name = document.createElement('div');
+                name.className = 'name';
+                name.textContent = assetPath.split('/').pop();
+                
+                img.onload = function() {
+                    assetItem.classList.add('success');
+                };
+                
+                img.onerror = function() {
+                    assetItem.classList.add('error');
+                    name.textContent += ' (FAILED)';
+                };
+                
+                assetItem.appendChild(img);
+                assetItem.appendChild(name);
+                container.appendChild(assetItem);
+            });
+        }
+
+        // Test all asset categories
+        testAsset('backgrounds-test', testAssets.backgrounds);
+        testAsset('scene-frame-test', testAssets.sceneFrame);
+        testAsset('base-test', testAssets.base);
+        testAsset('special-test', testAssets.special);
+        testAsset('accessories-test', testAssets.accessories);
+        testAsset('hat-test', testAssets.hat);
+        testAsset('stickers-test', testAssets.stickers);
+        testAsset('overlays-test', testAssets.overlays);
+    </script>
+</body>
+</html>
+

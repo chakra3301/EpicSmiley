@@ -73,10 +73,13 @@ document.addEventListener('DOMContentLoaded', function() {
                          } else if (appName === 'firefox') {
                  // Open Find the Epic Faces Wiki
                  window.open('https://find-the-epic-faces-official.fandom.com/wiki/Find_the_Epic_Faces_Wiki', '_blank');
-             } else if (appName === 'merch') {
-                 // Open Epic Store in new tab
-                 window.open('https://store.fun/epic', '_blank');
-             }
+            } else if (appName === 'merch') {
+                // Open Epic Store in new tab
+                window.open('https://store.fun/epic', '_blank');
+            } else if (appName === 'visualizer') {
+                // Open music visualizer
+                window.open('visualizer.html', '_blank');
+            }
              // TODO: Add other app-specific functionality here
         });
     });

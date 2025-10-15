@@ -2097,7 +2097,7 @@ body {
     border-radius: 4px;
 }
 
-.pfp-download-btn, .pfp-random-btn {
+.pfp-download-btn, .pfp-share-btn, .pfp-random-btn {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid #555;
     border-radius: 4px;
@@ -2111,13 +2111,25 @@ body {
     min-width: 80px;
 }
 
-.pfp-download-btn:hover, .pfp-random-btn:hover {
+.pfp-download-btn:hover, .pfp-share-btn:hover, .pfp-random-btn:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: #666;
 }
 
-.pfp-download-btn:active, .pfp-random-btn:active {
+.pfp-download-btn:active, .pfp-share-btn:active, .pfp-random-btn:active {
     background: rgba(255, 255, 255, 0.15);
+}
+
+.pfp-share-btn {
+    background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+    border-color: #1da1f2;
+}
+
+.pfp-share-btn:hover {
+    background: linear-gradient(135deg, #2ba9f3 0%, #1a9ce8 100%);
+    border-color: #2ba9f3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
 }
 
 /* PFP Generator Modal Maximized State */

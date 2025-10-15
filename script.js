@@ -33,10 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 150);
             
             // App-specific functionality
-            if (appName === 'musicly') {
-                // Open TikTok search for "epic face" in new tab
-                window.open('https://www.tiktok.com/search?q=epic%20face&t=1755554005908', '_blank');
-            } else if (appName === 'twitter') {
+            if (appName === 'twitter') {
                 // Open Epic Face X profile in new tab
                 window.open('https://x.com/Ep1cNFTs', '_blank');
             } else if (appName === 'soundcloud') {
@@ -1870,6 +1867,42 @@ function downloadPFP() {
     link.click();
 }
 
+function sharePFP() {
+    const canvas = document.getElementById('pfp-canvas');
+    if (!canvas) return;
+    
+    // Convert canvas to blob
+    canvas.toBlob(function(blob) {
+        // Copy image to clipboard
+        navigator.clipboard.write([
+            new ClipboardItem({
+                'image/png': blob
+            })
+        ]).then(function() {
+            // Open Twitter with pre-filled text
+            const tweetText = encodeURIComponent("@Ep1cNFTs Epic nft generator is soooooo #SWAG");
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+            window.open(twitterUrl, '_blank');
+            
+            // Show success message
+            showNotification("Image copied to clipboard! Paste it in your tweet.", "success");
+        }).catch(function(err) {
+            console.error('Failed to copy image to clipboard:', err);
+            // Fallback: download the image and open Twitter
+            const link = document.createElement('a');
+            link.download = 'epic-face-pfp.png';
+            link.href = canvas.toDataURL();
+            link.click();
+            
+            const tweetText = encodeURIComponent("@Ep1cNFTs Epic nft generator is soooooo #SWAG");
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+            window.open(twitterUrl, '_blank');
+            
+            showNotification("Image downloaded! Drag it into your tweet.", "info");
+        });
+    }, 'image/png');
+}
+
 // Make PFP Generator modal draggable
 function makePFPGeneratorDraggable() {
     const modal = document.getElementById('pfp-generator-modal');
@@ -1935,3 +1968,51 @@ function makePFPGeneratorDraggable() {
 document.addEventListener('DOMContentLoaded', function() {
     makePFPGeneratorDraggable();
 });
+
+// Notification function for user feedback
+function showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // Style the notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 50px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 10000;
+        font-size: 14px;
+        font-weight: 500;
+        max-width: 300px;
+        word-wrap: break-word;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.3s ease;
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateX(0)';
+    }, 10);
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 4000);
+}

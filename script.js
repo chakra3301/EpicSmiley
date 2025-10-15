@@ -38,15 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.open('https://www.tiktok.com/search?q=epic%20face&t=1755554005908', '_blank');
             } else if (appName === 'twitter') {
                 // Open Epic Face X profile in new tab
-                window.open('https://x.com/epicfacedotfun', '_blank');
-            } else if (appName === 'jupiter') {
-                // Open Jupiter Plugin Trading modal
-                const jupiterModal = document.getElementById('jupiter-modal');
-                if (jupiterModal) {
-                    jupiterModal.style.display = 'block';
-                    // Initialize Jupiter Plugin
-                    initJupiterPlugin();
-                }
+                window.open('https://x.com/Ep1cNFTs', '_blank');
             } else if (appName === 'soundcloud') {
                 // Open SoundCloud modal
                 const soundcloudModal = document.getElementById('soundcloud-modal');
@@ -70,14 +62,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Initialize PFP Generator
                     initPFPGenerator();
                 }
-                         } else if (appName === 'firefox') {
-                 // Open Find the Epic Faces Wiki
-                 window.open('https://find-the-epic-faces-official.fandom.com/wiki/Find_the_Epic_Faces_Wiki', '_blank');
-            } else if (appName === 'merch') {
-                // Open Epic Store in new tab
-                window.open('https://store.fun/epic', '_blank');
+            } else if (appName === 'firefox') {
+                // Open Find the Epic Faces Wiki
+                window.open('https://find-the-epic-faces-official.fandom.com/wiki/Find_the_Epic_Faces_Wiki', '_blank');
             }
-             // TODO: Add other app-specific functionality here
+            // TODO: Add other app-specific functionality here
         });
     });
     
@@ -90,51 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Jupiter modal close handler
-    const jupiterClose = document.getElementById('jupiter-close');
-    if (jupiterClose) {
-        jupiterClose.addEventListener('click', function() {
-            const jupiterModal = document.getElementById('jupiter-modal');
-            if (jupiterModal) {
-                jupiterModal.style.display = 'none';
-            }
-        });
-    }
-    
-    // Jupiter modal minimize handler
-    const jupiterMinimize = document.querySelector('.jupiter-minimize');
-    if (jupiterMinimize) {
-        jupiterMinimize.addEventListener('click', function() {
-            const jupiterModal = document.getElementById('jupiter-modal');
-            if (jupiterModal) {
-                jupiterModal.style.display = 'none';
-            }
-        });
-    }
-    
-    // Jupiter modal maximize handler
-    const jupiterMaximize = document.querySelector('.jupiter-maximize');
-    if (jupiterMaximize) {
-        jupiterMaximize.addEventListener('click', function() {
-            const jupiterModal = document.getElementById('jupiter-modal');
-            if (jupiterModal) {
-                jupiterModal.classList.toggle('jupiter-maximized');
-            }
-        });
-    }
-    
-    // Close Jupiter modal when clicking outside
-    const jupiterModal = document.getElementById('jupiter-modal');
-    if (jupiterModal) {
-        jupiterModal.addEventListener('click', function(e) {
-            if (e.target === jupiterModal) {
-                jupiterModal.style.display = 'none';
-            }
-        });
-    }
-    
-    // Make Jupiter modal draggable
-    makeJupiterDraggable();
     
     // SoundCloud modal close handler
     const soundcloudClose = document.getElementById('soundcloud-close');
@@ -487,99 +431,7 @@ function makeEpicSmilesDraggable() {
         });
     }
     
-// Jupiter Plugin Initialization
-function initJupiterPlugin() {
-    // Check if Jupiter Plugin is already initialized
-    if (window.jupiterPlugin) {
-        return;
-    }
-    
-    try {
-        // Initialize Jupiter Plugin v1 with correct syntax
-        window.jupiterPlugin = window.Jupiter.init({
-            displayMode: "integrated",
-            integratedTargetId: "jupiter-plugin",
-            formProps: {
-                initialInputMint: "6hZsdLMZn2Wi7NHWsdyeMM8jigapScA7GaVqjRhgpump", // EPIC token
-                fixedMint: "So11111111111111111111111111111111111111112", // SOL
-            },
-        });
-        
-    } catch (error) {
-        console.error('Failed to initialize Jupiter Plugin:', error);
-        // Fallback: show error message or redirect to Jupiter
-        const container = document.getElementById('jupiter-plugin');
-        if (container) {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 40px; color: #fff;">
-                    <h3>Jupiter Plugin Loading...</h3>
-                    <p>If this takes too long, <a href="https://jup.ag" target="_blank" style="color: #4ecdc4;">click here to trade on Jupiter</a></p>
-                </div>
-            `;
-        }
-    }
-}
 
-// Make Jupiter Modal Draggable
-function makeJupiterDraggable() {
-    const modal = document.getElementById('jupiter-modal');
-    const dragHandle = document.getElementById('jupiter-drag-handle');
-    
-    if (!modal || !dragHandle) return;
-    
-    let isDragging = false;
-    let startX, startY, startLeft, startTop;
-    
-    dragHandle.addEventListener('mousedown', function(e) {
-        // Don't start dragging if clicking on control buttons
-        if (e.target.closest('.jupiter-control')) {
-            return;
-        }
-        
-        isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        
-        // Get current position
-        const rect = modal.getBoundingClientRect();
-        startLeft = rect.left;
-        startTop = rect.top;
-        
-        // Add dragging class for visual feedback
-        modal.classList.add('jupiter-dragging');
-        
-        e.preventDefault();
-    });
-    
-    document.addEventListener('mousemove', function(e) {
-        if (!isDragging) return;
-        
-        const deltaX = e.clientX - startX;
-        const deltaY = e.clientY - startY;
-        
-        const newLeft = startLeft + deltaX;
-        const newTop = startTop + deltaY;
-        
-        // Update modal position
-        modal.style.left = newLeft + 'px';
-        modal.style.top = newTop + 'px';
-        modal.style.transform = 'none'; // Remove default transform
-    });
-    
-    document.addEventListener('mouseup', function() {
-        if (isDragging) {
-            isDragging = false;
-            modal.classList.remove('jupiter-dragging');
-        }
-    });
-    
-    // Prevent text selection while dragging
-    dragHandle.addEventListener('selectstart', function(e) {
-        if (isDragging) {
-            e.preventDefault();
-        }
-    });
-}
 
     // Make Trash Modal Draggable
     function makeTrashDraggable() {

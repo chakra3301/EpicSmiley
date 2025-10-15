@@ -2016,3 +2016,218 @@ function showNotification(message, type = 'info') {
         }, 300);
     }, 4000);
 }
+
+// ===== MOBILE TOUCH SUPPORT =====
+
+// Add touch support for better mobile experience
+document.addEventListener('DOMContentLoaded', function() {
+    // Prevent zoom on double tap for better UX
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+    
+    // Add touch feedback for dock items
+    const dockItems = document.querySelectorAll('.dock-item');
+    dockItems.forEach(item => {
+        item.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+            this.style.transition = 'transform 0.1s ease';
+        });
+        
+        item.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+            setTimeout(() => {
+                this.style.transition = '';
+            }, 100);
+        });
+        
+        item.addEventListener('touchcancel', function() {
+            this.style.transform = 'scale(1)';
+            this.style.transition = '';
+        });
+    });
+    
+    // Add touch feedback for PFP navigation buttons
+    const pfpNavBtns = document.querySelectorAll('.pfp-nav-btn');
+    pfpNavBtns.forEach(btn => {
+        btn.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.9)';
+            this.style.transition = 'transform 0.1s ease';
+        });
+        
+        btn.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+            setTimeout(() => {
+                this.style.transition = '';
+            }, 100);
+        });
+        
+        btn.addEventListener('touchcancel', function() {
+            this.style.transform = 'scale(1)';
+            this.style.transition = '';
+        });
+    });
+    
+    // Add touch feedback for action buttons
+    const actionBtns = document.querySelectorAll('.pfp-download-btn, .pfp-share-btn, .pfp-random-btn');
+    actionBtns.forEach(btn => {
+        btn.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+            this.style.transition = 'transform 0.1s ease';
+        });
+        
+        btn.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+            setTimeout(() => {
+                this.style.transition = '';
+            }, 100);
+        });
+        
+        btn.addEventListener('touchcancel', function() {
+            this.style.transform = 'scale(1)';
+            this.style.transition = '';
+        });
+    });
+    
+    // Add touch feedback for gallery images
+    const galleryImages = document.querySelectorAll('.epic-smiles-image');
+    galleryImages.forEach(img => {
+        img.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+            this.style.transition = 'transform 0.1s ease';
+        });
+        
+        img.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+            setTimeout(() => {
+                this.style.transition = '';
+            }, 100);
+        });
+        
+        img.addEventListener('touchcancel', function() {
+            this.style.transform = 'scale(1)';
+            this.style.transition = '';
+        });
+    });
+    
+    // Add touch feedback for modal controls
+    const modalControls = document.querySelectorAll('.epic-smiles-control, .pony-gallery-control, .pfp-generator-control');
+    modalControls.forEach(control => {
+        control.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.9)';
+            this.style.transition = 'transform 0.1s ease';
+        });
+        
+        control.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+            setTimeout(() => {
+                this.style.transition = '';
+            }, 100);
+        });
+        
+        control.addEventListener('touchcancel', function() {
+            this.style.transform = 'scale(1)';
+            this.style.transition = '';
+        });
+    });
+    
+    // Improve modal dragging for touch devices
+    const modals = document.querySelectorAll('.epic-smiles-modal, .pony-gallery-modal, .pfp-generator-modal');
+    modals.forEach(modal => {
+        let isDragging = false;
+        let startX, startY, startLeft, startTop;
+        
+        const dragHandle = modal.querySelector('.epic-smiles-modal-header, .pony-gallery-modal-header, .pfp-generator-modal-header');
+        
+        if (dragHandle) {
+            dragHandle.addEventListener('touchstart', function(e) {
+                isDragging = true;
+                const touch = e.touches[0];
+                startX = touch.clientX;
+                startY = touch.clientY;
+                
+                const rect = modal.getBoundingClientRect();
+                startLeft = rect.left;
+                startTop = rect.top;
+                
+                modal.style.transition = 'none';
+                e.preventDefault();
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (!isDragging) return;
+                
+                const touch = e.touches[0];
+                const deltaX = touch.clientX - startX;
+                const deltaY = touch.clientY - startY;
+                
+                modal.style.left = (startLeft + deltaX) + 'px';
+                modal.style.top = (startTop + deltaY) + 'px';
+                modal.style.transform = 'none';
+                
+                e.preventDefault();
+            });
+            
+            document.addEventListener('touchend', function() {
+                if (isDragging) {
+                    isDragging = false;
+                    modal.style.transition = '';
+                }
+            });
+        }
+    });
+    
+    // Add swipe gestures for gallery navigation (optional enhancement)
+    let startX = 0;
+    let startY = 0;
+    
+    document.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+    });
+    
+    document.addEventListener('touchend', function(e) {
+        if (!startX || !startY) return;
+        
+        const endX = e.changedTouches[0].clientX;
+        const endY = e.changedTouches[0].clientY;
+        
+        const diffX = startX - endX;
+        const diffY = startY - endY;
+        
+        // Only consider horizontal swipes
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+            // Swipe left or right - could be used for gallery navigation
+            // This is a placeholder for future enhancement
+        }
+        
+        startX = 0;
+        startY = 0;
+    });
+    
+    // Prevent context menu on long press for better mobile UX
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+    
+    // Add haptic feedback if available (for supported devices)
+    function addHapticFeedback() {
+        if ('vibrate' in navigator) {
+            navigator.vibrate(10); // Short vibration
+        }
+    }
+    
+    // Add haptic feedback to important interactions
+    dockItems.forEach(item => {
+        item.addEventListener('touchend', addHapticFeedback);
+    });
+    
+    actionBtns.forEach(btn => {
+        btn.addEventListener('touchend', addHapticFeedback);
+    });
+});

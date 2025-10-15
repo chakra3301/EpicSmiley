@@ -2225,3 +2225,417 @@ body {
         height: 60px;
     }
 }
+
+/* ===== MOBILE RESPONSIVE STYLES ===== */
+
+/* Mobile styles for screens smaller than 768px */
+@media screen and (max-width: 768px) {
+    /* Body adjustments */
+    body {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    
+    /* Top bar adjustments */
+    .top-bar {
+        height: 28px;
+        padding: 0 10px;
+        font-size: 12px;
+    }
+    
+    .logo-image {
+        width: 16px;
+        height: 16px;
+    }
+    
+    /* Dock adjustments for mobile */
+    .dock {
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 20px);
+        max-width: 400px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        backdrop-filter: blur(20px);
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .dock-items {
+        justify-content: space-around;
+        gap: 8px;
+    }
+    
+    .dock-item {
+        flex-direction: column;
+        padding: 6px 8px;
+        border-radius: 12px;
+        min-width: 50px;
+    }
+    
+    .dock-icon {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 2px;
+    }
+    
+    .dock-label {
+        font-size: 8px;
+        font-weight: 500;
+        text-align: center;
+        line-height: 1;
+    }
+    
+    /* Modal adjustments for mobile */
+    .epic-smiles-modal, .pony-gallery-modal, .pfp-generator-modal {
+        width: 95vw;
+        height: 90vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 12px;
+        max-width: none;
+        max-height: none;
+    }
+    
+    .epic-smiles-modal-content, .pony-gallery-modal-content, .pfp-generator-modal-content {
+        border-radius: 12px;
+        height: 100%;
+    }
+    
+    .epic-smiles-modal-header, .pony-gallery-modal-header, .pfp-generator-modal-header {
+        padding: 8px 12px;
+        border-radius: 12px 12px 0 0;
+    }
+    
+    .epic-smiles-title-bar, .pony-gallery-title-bar, .pfp-generator-title-bar {
+        font-size: 12px;
+    }
+    
+    .epic-smiles-title-icon, .pony-gallery-title-icon, .pfp-generator-title-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
+    /* Window controls adjustments */
+    .epic-smiles-controls, .pony-gallery-controls, .pfp-generator-controls {
+        gap: 6px;
+    }
+    
+    .epic-smiles-control, .pony-gallery-control, .pfp-generator-control {
+        width: 12px;
+        height: 12px;
+    }
+    
+    /* Epic Smiles Gallery mobile adjustments */
+    .epic-smiles-container {
+        padding: 8px;
+        height: calc(100% - 40px);
+    }
+    
+    .epic-smiles-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 6px;
+        padding: 4px;
+    }
+    
+    .epic-smiles-image {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .epic-smiles-image img {
+        width: 100%;
+        height: 80px;
+        object-fit: cover;
+    }
+    
+    /* PFP Generator mobile adjustments */
+    .pfp-generator-container {
+        padding: 8px;
+        height: calc(100% - 40px);
+        overflow-y: auto;
+    }
+    
+    .pfp-preview-section {
+        margin-bottom: 12px;
+    }
+    
+    .pfp-canvas-container {
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    
+    .pfp-canvas {
+        width: 100%;
+        height: auto;
+        max-width: 200px;
+        max-height: 200px;
+    }
+    
+    .pfp-controls {
+        gap: 8px;
+        flex-direction: column;
+    }
+    
+    .pfp-control-section {
+        padding: 6px;
+        margin-bottom: 4px;
+    }
+    
+    .pfp-nav-section {
+        gap: 4px;
+    }
+    
+    .pfp-nav-btn {
+        padding: 2px 6px;
+        font-size: 9px;
+        min-width: 24px;
+    }
+    
+    .pfp-asset-name {
+        font-size: 9px;
+        padding: 2px 4px;
+    }
+    
+    .pfp-asset-counter {
+        font-size: 8px;
+        padding: 1px 3px;
+    }
+    
+    .pfp-asset-preview {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .pfp-actions {
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 8px;
+    }
+    
+    .pfp-download-btn, .pfp-share-btn, .pfp-random-btn {
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 11px;
+        min-width: auto;
+    }
+    
+    /* SoundCloud modal mobile adjustments */
+    .soundcloud-modal {
+        width: 95vw;
+        height: 60vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 12px;
+    }
+    
+    .soundcloud-modal-content {
+        border-radius: 12px;
+        height: 100%;
+        padding: 12px;
+    }
+    
+    .soundcloud-modal-header {
+        padding: 8px 12px;
+        border-radius: 12px 12px 0 0;
+    }
+    
+    .soundcloud-title-bar {
+        font-size: 12px;
+    }
+    
+    .soundcloud-title-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
+    /* Image modal mobile adjustments */
+    .image-modal {
+        padding: 10px;
+    }
+    
+    .image-modal-content {
+        max-width: 95vw;
+        max-height: 90vh;
+        border-radius: 8px;
+    }
+    
+    .image-modal img {
+        max-width: 100%;
+        max-height: 80vh;
+        border-radius: 8px;
+    }
+    
+    .image-modal-close {
+        top: 15px;
+        right: 15px;
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+    }
+    
+    /* Notification adjustments for mobile */
+    .notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        font-size: 13px;
+        padding: 10px 15px;
+    }
+}
+
+/* Mobile landscape adjustments */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .dock {
+        bottom: 5px;
+        width: calc(100% - 10px);
+        max-width: 500px;
+    }
+    
+    .dock-items {
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    .dock-item {
+        flex-direction: row;
+        padding: 4px 8px;
+        min-width: 60px;
+    }
+    
+    .dock-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 4px;
+        margin-bottom: 0;
+    }
+    
+    .dock-label {
+        font-size: 9px;
+    }
+    
+    .epic-smiles-modal, .pony-gallery-modal, .pfp-generator-modal {
+        width: 90vw;
+        height: 85vh;
+    }
+    
+    .pfp-generator-container {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+    }
+    
+    .pfp-preview-section {
+        flex: 1;
+        margin-bottom: 0;
+    }
+    
+    .pfp-controls {
+        flex: 1;
+        overflow-y: auto;
+    }
+}
+
+/* Very small screens (phones in portrait) */
+@media screen and (max-width: 480px) {
+    .dock {
+        bottom: 8px;
+        padding: 6px 8px;
+        border-radius: 16px;
+    }
+    
+    .dock-item {
+        padding: 4px 6px;
+        min-width: 45px;
+    }
+    
+    .dock-icon {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .dock-label {
+        font-size: 7px;
+    }
+    
+    .epic-smiles-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 4px;
+    }
+    
+    .epic-smiles-image img {
+        height: 70px;
+    }
+    
+    .pfp-canvas-container {
+        max-width: 150px;
+    }
+    
+    .pfp-canvas {
+        max-width: 150px;
+        max-height: 150px;
+    }
+    
+    .pfp-asset-preview {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .pfp-nav-btn {
+        padding: 1px 4px;
+        font-size: 8px;
+        min-width: 20px;
+    }
+    
+    .pfp-asset-name {
+        font-size: 8px;
+    }
+    
+    .pfp-asset-counter {
+        font-size: 7px;
+    }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch targets */
+    .dock-item {
+        padding: 8px 10px;
+    }
+    
+    .epic-smiles-control, .pony-gallery-control, .pfp-generator-control {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .pfp-nav-btn {
+        padding: 4px 8px;
+        min-width: 32px;
+    }
+    
+    .pfp-download-btn, .pfp-share-btn, .pfp-random-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .dock-item:hover {
+        transform: none;
+    }
+    
+    .epic-smiles-image:hover {
+        transform: none;
+    }
+    
+    .pfp-nav-btn:hover {
+        transform: none;
+    }
+    
+    .pfp-download-btn:hover, .pfp-share-btn:hover, .pfp-random-btn:hover {
+        transform: none;
+    }
+}

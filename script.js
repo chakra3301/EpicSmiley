@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     initPFPGenerator();
                 }
             } else if (appName === 'firefox') {
-                // Open Find the Epic Faces Wiki
-                window.open('https://find-the-epic-faces-official.fandom.com/wiki/Find_the_Epic_Faces_Wiki', '_blank');
+                // Open Know Your Meme page about Awesome Face / Epic Face
+                window.open('https://the-know-your-meme-archive.fandom.com/wiki/Awesome_Face_/_Epic_Face', '_blank');
             }
             // TODO: Add other app-specific functionality here
         });

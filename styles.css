@@ -273,9 +273,9 @@ body {
 /* 3D Spinning Asset */
 .spinning-3d {
     position: absolute;
-    top: calc(100vh - 200px);
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     z-index: 100;
     width: 300px;
     height: 300px;

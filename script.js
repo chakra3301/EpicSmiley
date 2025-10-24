@@ -564,166 +564,6 @@ function makeEpicSmilesDraggable() {
     });
 }
 
-    // 3D Model Loading and Rendering
-let scene, camera, renderer, model;
-
-function init3D() {
-    console.log('Initializing 3D scene...');
-    
-    // First, let's test if Three.js is working at all
-    if (typeof THREE === 'undefined') {
-        console.error('Three.js not loaded!');
-        return;
-    }
-    
-    console.log('Three.js version:', THREE.REVISION);
-    
-    const container = document.getElementById('3d-container');
-    
-    if (!container) {
-        console.error('3D container not found!');
-        return;
-    }
-    
-    try {
-        // Create scene
-        scene = new THREE.Scene();
-        scene.background = null; // Transparent background
-        
-        // Create camera
-        camera = new THREE.PerspectiveCamera(75, 300 / 300, 0.1, 1000);
-        camera.position.z = 5;
-        
-        // Create renderer
-        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(300, 300);
-        renderer.setClearColor(0x000000, 0);
-        container.appendChild(renderer.domElement);
-        
-        console.log('3D renderer created and added to container');
-        
-        // Add lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-        
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(10, 10, 5);
-        scene.add(directionalLight);
-        
-        // Load the actual 3D model from epic-face folder
-        console.log('Loading epic.obj model...');
-        
-        // Check if OBJLoader is available
-        if (typeof THREE.OBJLoader !== 'undefined') {
-            console.log('OBJLoader available, loading epic.obj...');
-            
-            // Load the texture first
-            const textureLoader = new THREE.TextureLoader();
-            textureLoader.load(
-                'assets/epic-face/textures/epic_face_-_Copy.png',
-                function(texture) {
-                    console.log('Texture loaded successfully!');
-                    
-                    // Now load the OBJ model with the texture
-                    const loader = new THREE.OBJLoader();
-                    loader.load(
-                        'assets/epic-face/source/epic.obj',
-                        function(object) {
-                            console.log('3D model loaded successfully!');
-                            model = object;
-                            
-                            // Apply the texture to all materials in the model
-                            object.traverse(function(child) {
-                                if (child.isMesh) {
-                                    child.material.map = texture;
-                                    child.material.needsUpdate = true;
-                                }
-                            });
-                            
-                            // Center the model
-                            const box = new THREE.Box3().setFromObject(model);
-                            const center = box.getCenter(new THREE.Vector3());
-                            model.position.sub(center);
-                            
-                            // Scale the model to fit nicely
-                            const size = box.getSize(new THREE.Vector3());
-                            const maxDim = Math.max(size.x, size.y, size.z);
-                            const scale = 4 / maxDim; // Increased from 2 to 4 for bigger size
-                            model.scale.setScalar(scale);
-                            
-                            scene.add(model);
-                            console.log('Epic model with texture added to scene');
-                        },
-                        function(xhr) {
-                            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-                        },
-                        function(error) {
-                            console.error('Error loading 3D model:', error);
-                                                // Fallback: create a simple spinning cube
-                    const geometry = new THREE.BoxGeometry(4, 4, 4);
-                    const material = new THREE.MeshLambertMaterial({ color: 0xff0000 });
-                    model = new THREE.Mesh(geometry, material);
-                    scene.add(model);
-                    console.log('Added fallback cube due to loading error');
-                        }
-                    );
-                },
-                function(xhr) {
-                    console.log('Texture loading progress:', (xhr.loaded / xhr.total * 100) + '%');
-                },
-                function(error) {
-                    console.error('Error loading texture:', error);
-                    // Load model without texture
-                    const loader = new THREE.OBJLoader();
-                    loader.load(
-                        'assets/epic-face/source/epic.obj',
-                        function(object) {
-                            console.log('3D model loaded without texture');
-                            model = object;
-                            
-                            // Center and scale the model
-                            const box = new THREE.Box3().setFromObject(model);
-                            const center = box.getCenter(new THREE.Vector3());
-                            model.position.sub(center);
-                            
-                            const size = box.getSize(new THREE.Vector3());
-                            const maxDim = Math.max(size.x, size.y, size.z);
-                            const scale = 4 / maxDim; // Increased from 2 to 4 for bigger size
-                            model.scale.setScalar(scale);
-                            
-                            scene.add(model);
-                        }
-                    );
-                }
-            );
-        } else {
-            console.error('OBJLoader not available, using fallback cube');
-            // Fallback: create a simple spinning cube
-            const geometry = new THREE.BoxGeometry(4, 4, 4);
-            const material = new THREE.MeshLambertMaterial({ color: 0xff0000 });
-            model = new THREE.Mesh(geometry, material);
-            scene.add(model);
-            console.log('Added fallback cube');
-        }
-        
-        // Animation loop
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            if (model) {
-                model.rotation.y += 0.03; // Faster rotation
-            }
-            
-            renderer.render(scene, camera);
-        }
-        
-        animate();
-        console.log('Animation loop started');
-        
-    } catch (error) {
-        console.error('Error in 3D initialization:', error);
-    }
-}
 
 
 
@@ -741,8 +581,36 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Trash modal HTML not found!');
     }
     
-    // Initialize 3D scene
-    init3D();
+    // MINT Button functionality
+    const mintButton = document.getElementById('mint-button');
+    if (mintButton) {
+        mintButton.addEventListener('click', function() {
+            console.log('MINT button clicked!');
+            
+            // Add click animation
+            this.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
+            
+            // TODO: Add MINT functionality here
+            // This could open a minting interface, redirect to a minting page, etc.
+            showNotification("MINT button clicked! Minting functionality coming soon...", "success");
+        });
+        
+        // Add hover effects
+        mintButton.addEventListener('mouseenter', function() {
+            console.log('MINT button hovered');
+            // Apply webpage shake to body
+            document.body.style.animation = 'webpageShake 0.05s ease-in-out infinite';
+        });
+        
+        mintButton.addEventListener('mouseleave', function() {
+            console.log('MINT button unhovered');
+            // Remove webpage shake from body
+            document.body.style.animation = '';
+        });
+    }
     
     // Right-click context menu prevention (optional)
     desktop.addEventListener('contextmenu', function(e) {

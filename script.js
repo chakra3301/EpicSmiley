@@ -601,8 +601,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add hover effects
         mintButton.addEventListener('mouseenter', function() {
             console.log('MINT button hovered');
-            // Apply webpage shake to body
-            document.body.style.animation = 'webpageShake 0.05s ease-in-out infinite';
+            // Apply intense webpage shake to body
+            document.body.style.animation = 'intenseShake 0.1s ease-in-out infinite';
         });
         
         mintButton.addEventListener('mouseleave', function() {

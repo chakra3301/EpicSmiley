@@ -593,9 +593,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = 'scale(1)';
             }, 150);
             
-            // TODO: Add MINT functionality here
-            // This could open a minting interface, redirect to a minting page, etc.
-            showNotification("MINT button clicked! Minting functionality coming soon...", "success");
+            // Redirect to minting page
+            showNotification("Redirecting to mint page...", "success");
+            setTimeout(() => {
+                window.open('https://vvv.so/epic-face-2', '_blank');
+            }, 500);
         });
         
         // Add hover effects
